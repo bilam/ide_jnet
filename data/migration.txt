@@ -1,0 +1,133 @@
+Migration Notes
+
+JNet implements most of J602 wd commands with
+differences as summarized below.
+
+== JNET
+   noun JNET_z_ set to 1 by jnet.exe
+   wd'qwd' reports 'jwin32' on both Windows and Linux
+
+== some J805 jqt wd commands are implemented.
+   bin and other related commands are ignored.
+
+== COM automation server
+   progid changed to J.Net.JEXEServer
+   register using RegAsm.exe
+
+== ole/opengl
+   wd ole/ocx commands and opengl not supported
+
+== project manager
+   J602 ijp decommitted. use J805 jproj project folder.
+
+== pc and pc6j
+   both of them create new parent forms
+   pc   J805 compatible
+     dialog unit = pixel
+     set id property ...
+   pc6j J602 compatible
+     dialog unit = 2 x pixel
+     set id ...   (default property)
+
+== setc  (new)
+   setc id property ...  (works in both pc and pc6j)
+
+== tab and subform
+   creategroup id
+     only on tab control. groupbox not supported
+   setshow group [0/1] ignored,
+   setselect id n   to switch and show tabpage
+
+== mb
+   the syntax for messages is:
+     wd 'mb type [defbutton] buttons title message'
+
+   type specifies the icon and default behaviour:
+    about
+    info      (default OK button)
+    warn      (default OK button)
+    critical  (default OK button)
+    query     (requires two or three buttons)
+
+   if one button, there is no result,
+   otherwise the result is the button name (ok, cancel, ...)
+
+   buttons are from the set, defbutton {} is the default:
+    mb_abortretryignore contains Abort, Retry, and Ignore buttons.
+    mb_ok               contains an OK button.
+    mb_okcancel         contains OK and Cancel buttons.
+    mb_retrycancel      contains Retry and Cancel buttons.
+    mb_yesno            contains Yes and No buttons.
+    mb_yesnocancel      contains Yes, No, and Cancel buttons.
+
+   defbutton if present is either
+    mb_defbutton1,  mb_defbutton2,  mb_defbutton3
+
+   Other commands
+     mb dir title directory
+     mb open1 title directory [filters]       (return 1 file)
+     mb open needs title directory [filters]  (return list of files)
+     mb save title directory [filters]
+     mb save6 title directory filename [filters] (filename ignored)
+     mb open6 title directory filename [filters] (filename ignored)
+     mb font title font size
+     mb color [R G B]
+     mb print
+
+== gl2 printing
+   printer mapping mode in 1/100 inch  (twip in J602)
+   print mode pagelength,pagewidth in 1/100 inch  (0.1mm in J602)
+
+== syntax coloring
+   no effect on Linux except text and background color
+   Color scheme set in Edit|configure|Color
+   known issue in font with underline
+   smkeywords changed:
+     wd'smkeywords 0 [0/1]'   enable syntax coloring
+     wd'smkeywords 1 [0/1]'   enable syntax coloring in Term
+     wd'smkeywords 2 [0/1]'   enable unmatched parenthesis
+     other smkeywords options are ignored
+   smcolor changed:
+    smcolor supports italic,underline,bold and strikeout style
+    smcolor mapping is fixed as:
+    00-19  system colors
+    20-39  class colors
+    40-59  keyword colors
+    (no effect for colors 2,3,4,5,21)
+
+     0      bkgnd
+     1      text
+     2      selbkgnd
+     3      seltext
+     4      margin
+     5      mark (character digits, not bitmaps)
+     6      lab text background
+     7      lab text foreground
+     8      readonly background
+     9      noundef
+    10      note
+    11-19   reserved
+    20      primitive
+    21      name
+    22      number
+    23      string
+    24      comment
+    25      open quote
+    26      first unmatched )(     (thanks Raul Miller)
+    27      name =:
+    28      name =.
+    29      naked ) - explicit definition and lab section close
+    30      malformed
+    31      box drawing
+    32-39   reserved
+    40      control words
+    41      adverb
+    42      arguments
+    44      conjunction
+    45      noun
+    46      verb
+    47-59   keywords
+
+== Others
+   webview depends on IE and does not work on Linux
+

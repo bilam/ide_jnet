@@ -1,0 +1,48 @@
+directory: addons/ide/jnet/config
+
+This directory contains scripts used in configuration.
+
+config.ijs
+==========
+This script defines the standard configuration.
+
+profile.ijs
+===========
+This script contains the standard profile.
+
+-------------------------------------------
+
+The configuration file defines:
+
+FIXFONTJ fixed font for Java
+PROFONTJ proportional font for Java
+FIXFONTW fixed font for Windows
+PROFONTW proportional font for Windows
+
+PRINTERFONT printer font
+PRINTOPT print options
+P2UPFONT 2-up print font
+
+SMCOLOR color definitions
+SMCOLORID color id
+SMINIT initial session position
+SMPRINT session manager print function
+SMSIZE new window size
+
+BOXPOS boxed output positioning
+CONFIRMCLOSE 1 if confirm on close J
+DIRTREEX exclusion list for dirtree
+DISPLAYFORM output display form
+FKEYS function key definitions
+FORMAT configure Format Script menu item
+FORMSIZES form sizes
+MEMORYLIM memory limit
+NEWUSER if newuser
+OUTPUT output definition
+PRINTPREC print precision
+READONLY open file read state
+SHOWSIP if show soft keyboard on PPC
+SKEYS menu shortcut key definitions
+STARTUP user's start up file
+STATUSBAR if show statusbar (not used in J5)
+XNAMES if explicit argument names y. are permitted
