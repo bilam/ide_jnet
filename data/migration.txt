@@ -11,8 +11,10 @@ differences as summarized below.
    bin and other related commands are ignored.
 
 == COM automation server
-   progid changed to J.Net.JEXEServer
-   register using RegAsm.exe
+   progid: JEXEServerLib.JEXEServer
+   register: jnet.exe /regserver
+   unregister: jnet.exe /unregserver
+   known bugs: can not create forms using Do()
 
 == ole/opengl
    wd ole/ocx commands and opengl not supported
