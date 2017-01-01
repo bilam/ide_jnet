@@ -3,7 +3,7 @@ NB. menu demo
 coclass 'jndemo'
 
 test=: 3 : 0
-wd 'pc test'
+wd 'pc6j test'
 wd 'menupop "&File"'
 wd 'menu new "&New File"'
 wd 'menu open "&Open File"'
@@ -24,11 +24,11 @@ wd 'menupopz'
 wd 'menupop "&Help"'
 wd 'menu about "&About"'
 wd 'menupopz'
-wd 'set sidebar checked 1'
+wd 'set sidebar 1'
 wd 'setenable font 0'
-wd 'wh 300 200'
+wd 'xywh 0 0 300 200'
 wd 'cc list listbox'
-wd 'set list items one two three'
+wd 'set list one two three'
 wd 'pshow'
 )
 

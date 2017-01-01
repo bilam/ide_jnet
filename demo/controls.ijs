@@ -55,9 +55,9 @@ wincontrol_cancel_button=: wincontrol_close
 wincontrol_ok_button=: wincontrol_cancel_button
 
 wincontrol_tabs_button=: 3 : 0
-NB. wd 'setshow ',(>TABNDX{tabgroups),' 0'
+wd 'setshow ',(>TABNDX{tabgroups),' 0'
 TABNDX=: ".tabs_select
-NB. wd 'setshow ',(>TABNDX{tabgroups),' 1'
+wd 'setshow ',(>TABNDX{tabgroups),' 1'
 )
 
 wincontrol_new_button=: 3 : 0

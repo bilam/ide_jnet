@@ -5,16 +5,16 @@ PROFONTW=: '"MS Sans Serif" 10'
 
 3 : 0''
 if. IFUNIX do.
-  FIXFONTJ=: 'monospaced 12'
-  PROFONTJ=: 'sansserif 10'
+  FIXFONTJ=: IFJAVA{::'"DejaVu Sans Mono" 12';'Monospaced 12'
+  PROFONTJ=: IFJAVA{::'"DejaVu Serif" 10';'SansSerif 10'
 else.
   FIXFONTJ=: FIXFONTW
   PROFONTJ=: PROFONTW
 end.
 )
 
-PRINTERFONT=: '"Courier New" 12'
-P2UPFONT=: '"Courier New" 7.5 bold'
+PRINTERFONT=: FIXFONTJ
+P2UPFONT=: IFUNIX{::'"Courier New" 7.5 bold';'"DejaVu Serif" 7.5 bold'
 SMPRINT=: 'print'
 PRINTOPT=: ''
 SMINIT=: 0 0 700 500

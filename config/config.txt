@@ -14,8 +14,8 @@ This script contains the standard profile.
 
 The configuration file defines:
 
-FIXFONTJ fixed font for Java
-PROFONTJ proportional font for Java
+FIXFONTJ fixed font for Java/Linux
+PROFONTJ proportional font for Java/Linux
 FIXFONTW fixed font for Windows
 PROFONTW proportional font for Windows
 

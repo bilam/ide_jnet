@@ -30,8 +30,8 @@ load 'ide/jnet/gl2'
 
 3 : 0''
 if. IFUNIX do.
-  if. 0~:nc <'FIXFONT' do. FIXFONT=: 'monospace 12' end.
-  if. 0~:nc <'PROFONT' do. PROFONT=: 'sansserif 10' end.
+  if. 0~:nc <'FIXFONT' do. FIXFONT=: IFJAVA{::'"DejaVu Sans Mono" 12';'Monospaced 12' end.
+  if. 0~:nc <'PROFONT' do. PROFONT=: IFJAVA{::'"DejaVu Serif" 10';'SansSerif 10' end.
 else.
   if. 0~:nc <'FIXFONT' do. FIXFONT=: '"Courier New" 12' end.
   if. 0~:nc <'PROFONT' do. PROFONT=: '"MS Sans Serif" 8' end.

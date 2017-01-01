@@ -104,8 +104,8 @@ wd 'pshow'
 newuserdefs=: 3 : 0
 JVER=: 'J805'
 if. IFUNIX do.
-  FONT=: 'sansserif 10'
-  FONT2=: 'sansserif 14 bold'
+  FONT=: IFJAVA{::'"DejaVu Serif" 10';'SansSerif 10'
+  FONT2=: IFJAVA{::'"DejaVu Serif" 14 bold';'SansSerif 14 bold'
 else.
   FONT=: '"MS Sans Serif" 10'
   FONT2=: '"MS Sans Serif" 14 bold'

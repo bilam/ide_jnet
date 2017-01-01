@@ -8,14 +8,15 @@ coclass 'jndemo'
 
 NB. =========================================================
 PBdemo=: 0 : 0
-pc pbdemo closeok escclose;
-minwh 400 200;cc prog progressbar 0 20 7;
+pc6j pbdemo closeok;
+xywh 0 0 200 100;cc prog progress;
 )
 
 NB. =========================================================
 pbdemo_run=: 3 : 0
 wd PBdemo
 wd 'pshow'
+wd 'set prog 20'
 )
 
 NB. =========================================================

@@ -6,7 +6,7 @@ ABC=: 0 : 0
 pc6j abc;pn "Unicode";
 xywh 7 8 156 24;cc b button rightmove;
 xywh 8 39 156 52;cc em editm rightmove bottomscale;
-xywh 94 100 70 12;cc viewsource button leftmove rightmove;cn "View Source";
+xywh 94 100 70 12;cc viewsource button leftmove rightmove topmove bottommove;cn "View Source";
 pas 6 6;pcenter;
 rem form end;
 )

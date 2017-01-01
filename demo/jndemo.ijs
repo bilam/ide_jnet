@@ -92,16 +92,16 @@ NB. =========================================================
 dcities=: 'citydemo' rundemo
 dcoins=: 'coins' rundemo
 dcontrols=: 'controls' rundemo
-ddatetime=: 'datetime' rundemo
-dedit=: 'edit' rundemo
+ddatetime=: 'datetime' rundemo`notsupport@.(-.IFJNET)
+dedit=: 'edit' rundemo`notsupport@.(-.IFJNET)
 devents=: 'events' rundemo
 dform=: 'form' rundemo
 dgl2=: 'gl2' rundemo
 dgrid=: 'grid' rundemo
-dimage=: 'image' rundemo
+dimage=: 'image' rundemo`notsupport@.(-.IFJNET)
 dlife=: 'life' rundemo
-dmbox=: 'mbox' rundemo
-dmbdialog=: 'mbdialog' rundemo
+dmbox=: 'mbox' rundemo`notsupport@.(-.IFJNET)
+dmbdialog=: 'mbdialog' rundemo`notsupport@.(-.IFJNET)
 dmenu=: 'menu' rundemo
 dmsgs=: 'msgs' rundemo
 dpenstyles=: 'penstyles' rundemo
@@ -112,17 +112,17 @@ dspinbox=: 'spinbox' rundemo
 drtf=: 'rtf' rundemo
 dregex=: 'regdemo' rundemo
 dtimer=: 'timer' rundemo
-dtrackbar=: 'trackbar' rundemo
+dtrackbar=: 'trackbar' rundemo`notsupport@.(-.IFJNET)
 dunisimple=: 'unisimple' rundemo
 dviewmat=: 'viewmat' rundemo
-dwebd3=: 'webd3' rundemo
-dwebview=: 'webview' rundemo
+dwebd3=: 'webd3' rundemo`notsupport@.(-.IFJNET)
+dwebview=: 'webview' rundemo`notsupport@.(-.IFJNET)
 
 NB. =========================================================
-disigraph=: load bind ('~addons/demos/isigraph/isdemo.ijs')
+disigraph=: (load bind ('~addons/demos/isigraph/isdemo.ijs'))`notsupport@.(-.IFJNET)
 
 NB. =========================================================
-dwdplot=: load bind ('~addons/demos/wdplot/plotdemo.ijs')
+dwdplot=: (load bind ('~addons/demos/wdplot/plotdemo.ijs'))`notsupport@.(-.IFJNET)
 
 NB. =========================================================
 jndemo_view_button=: 3 : 0
@@ -148,7 +148,7 @@ wdinfo 'To run this demo, first install: ',install
 
 NB. =========================================================
 notsupport=: 3 : 0
-wdinfo 'This demo is not supported on ', UNAME, ' ', wd 'version'
+wdinfo 'This demo is not supported on ', UNAME, ' ', wd ::(wd bind 'qwd') 'version'
 )
 
 NB. =========================================================

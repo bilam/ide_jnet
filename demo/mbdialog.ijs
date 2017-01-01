@@ -49,7 +49,7 @@ NB. =========================================================
 NB. wd 'mb font'
 NB. wd 'mb font family size [bold] [italic]'
 demo5=: 3 : 0
-wd 'mb font monospace 10 bold underline'
+wd 'mb font Monospaced 10 bold underline'
 )
 
 NB. =========================================================

@@ -1029,7 +1029,7 @@ else.
 
   HWNDP=: 0 ". jdb_wd 'qhwndp'
 
-  jdb_wd^:(-.IFJNET) 'setshow tabs 0'
+  jdb_wd 'setshow tabs 0'
   if. 0 = wpset_j_ :: 0: 'jdebug' do.
     jdb_wd 'pmovex ', ": (0 0,MINWIDTH,0) >. ".jdb_wd 'qformx'
     wdmove _10 10

@@ -7,22 +7,32 @@ differences as summarized below.
    noun JNET_z_ set to 1 by jnet.exe
    wd'qwd' reports 'jwin32' on both Windows and Linux
 
-== some J805 jqt wd commands are implemented.
+== jqt wd commands
+   some jqt wd commands are implemented.
    bin and other related commands are ignored.
 
-== COM automation server
+== com automation server
    progid: JEXEServerLib.JEXEServer
    register: jnet.exe /regserver
    unregister: jnet.exe /unregserver
-   known bugs: can not create forms using Do()
-
-== ole/opengl
-   wd ole/ocx commands and opengl not supported
+   known bugs: can not create forms or UI using Do()
 
 == project manager
    J602 ijp decommitted. use J805 jproj project folder.
 
-== pc and pc6j
+== un-implemented wd commands
+   clipcopyx clippastex qkeystate sbarshow security setcolwidth
+   setpclip tbarshow tnomsgs wait
+   all ole commands
+
+== incompatible changes
+
+=== creategroup
+   creategroup id
+     only on tab control. groupbox not supported
+   setselect id n   to switch and show tabpage
+
+=== pc and pc6j
    both of them create new parent forms
    pc   J805 compatible
      dialog unit = pixel
@@ -30,17 +40,14 @@ differences as summarized below.
    pc6j J602 compatible
      dialog unit = 2 x pixel
      set id ...   (default property)
-
-== setc  (new)
+   
    setc id property ...  (works in both pc and pc6j)
 
-== tab and subform
-   creategroup id
-     only on tab control. groupbox not supported
-   setshow group [0/1] ignored,
-   setselect id n   to switch and show tabpage
+=== gl2 printing
+   printer mapping mode in 1/100 inch  (twip in J602)
+   print mode pagelength,pagewidth in 1/100 inch  (0.1mm in J602)
 
-== mb
+=== mb commands
    the syntax for messages is:
      wd 'mb type [defbutton] buttons title message'
 
@@ -75,10 +82,6 @@ differences as summarized below.
      mb font title font size
      mb color [R G B]
      mb print
-
-== gl2 printing
-   printer mapping mode in 1/100 inch  (twip in J602)
-   print mode pagelength,pagewidth in 1/100 inch  (0.1mm in J602)
 
 == syntax coloring
    no effect on Linux except text and background color
@@ -131,5 +134,6 @@ differences as summarized below.
     47-59   keywords
 
 == Others
+   opengl, multimedia, video not implemented
    webview depends on IE and does not work on Linux
 

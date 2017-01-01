@@ -17,15 +17,16 @@ EMPTY
 NB. =========================================================
 FORM=: 0 : 0
 pc demo closeok;pn "gl2 demo";
-minwh 450 350;
-cc gs isigraph flush;
+xywh 0 0 450 350;
+cc gs isigraph;
 )
 
 NB. =========================================================
 demo_gs_paint=: 3 : 0
 'w h'=: glqwh''
 NB. draw grid
-glfill 255 255 255 255
+echo glqwh''
+glfill^:IFJNET 255 255 255 255
 glrgb 128 128 18
 glpen 0 1
 for_i. 50* i.>.h%50 do.
@@ -68,13 +69,14 @@ gllines 10 10 300 300
 NB. text
 glrgb 255 0 0
 gltextcolor''
-glfont '"courier new" 20'
+glfont '"courier new" 20 angle450'
 gltextxy 150 150
-glfontangle 450
+NB. glfontangle 450
 gltext 'how now'
 
 NB. polygon
-glrgba 0 255 0 128
+glrgba^:IFJNET 0 255 0 128
+glrgb^:(-.IFJNET) 0 255 0
 glpen 1 1
 glbrush''
 glpolygon 250 200 300 300 400 100 300 150

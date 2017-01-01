@@ -1962,6 +1962,7 @@ cfviewdisp''
 cfview_gpos_paint''
 )
 cfview_gpos_paint=: 3 : 0
+wd 'psel cfmain'
 a=. 0 ". wd 'qchildxywhx gpos'
 GPOSWH=: 3 * >. 3 %~ <./ (2 {. a % GPOSORG) * _2 {. GPOSORG
 wd 'setxywhx gpos ',": (2 {. a), 1+ 2 # GPOSWH
@@ -2078,7 +2079,7 @@ LOADED=: TABNDX { TABGROUPS
 
 wd CFMAIN
 JCFH=: wd 'qhwndp'
-wd^:(-.IFJNET) 'setshow tabs 0'
+wd 'setshow tabs 0'
 wd 'set category ',todel TABNAMES
 wd 'setselect category 0'
 wd 'creategroup tabs'

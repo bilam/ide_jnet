@@ -18,13 +18,16 @@ penstyle_run=: 3 : 0
 if. -. checkrequire 'gl2';'graphics/gl2' do. return. end.
 require 'gl2'
 coinsert 'jgl2'
-wd 'pc penstyle escclose closeok'
-wd 'pn Pen Styles'
-wd 'minwh 400 270'
-wd 'cc g isidraw flush'
+wd 'pc6j penstyle closeok'
+wd 'pn "Pen Styles"'
+wd 'xywh 0 0 400 270'
+wd 'cc g isigraph'
 wd 'pshow'
-off=. <.-:{:glqextent'X'
-glfill 255 255 255 255
+)
+
+penstyle_g_paint=: 3 : 0
+off=. 30
+glfill^:IFJNET 255 255 255 255
 glrgb 0 0 255
 for_i. i.#PenStyles do.
   y=. 30+40*i
@@ -33,7 +36,6 @@ for_i. i.#PenStyles do.
   gltextxy 230,y-off
   gltext (":i),' ',i pick PenStyles
 end.
-glpaint''
 )
 
 penstyle_run''
