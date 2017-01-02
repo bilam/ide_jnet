@@ -108,7 +108,7 @@ dpenstyles=: 'penstyles' rundemo
 dplot=: 'plot' rundemo
 dpousse=: 'pousse' rundemo
 dprogress=: 'progress' rundemo
-dspinbox=: 'spinbox' rundemo
+dspinbox=: 'spinbox' rundemo`notsupport@.(-.IFJNET)
 drtf=: 'rtf' rundemo
 dregex=: 'regdemo' rundemo
 dtimer=: 'timer' rundemo
@@ -119,10 +119,10 @@ dwebd3=: 'webd3' rundemo`notsupport@.(-.IFJNET)
 dwebview=: 'webview' rundemo`notsupport@.(-.IFJNET)
 
 NB. =========================================================
-disigraph=: (load bind ('~addons/demos/isigraph/isdemo.ijs'))`notsupport@.(-.IFJNET)
+disigraph=: load bind ('~addons/demos/isigraph/isdemo.ijs')
 
 NB. =========================================================
-dwdplot=: (load bind ('~addons/demos/wdplot/plotdemo.ijs'))`notsupport@.(-.IFJNET)
+dwdplot=: load bind ('~addons/demos/wdplot/plotdemo.ijs')
 
 NB. =========================================================
 jndemo_view_button=: 3 : 0

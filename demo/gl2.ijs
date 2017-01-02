@@ -16,8 +16,8 @@ EMPTY
 
 NB. =========================================================
 FORM=: 0 : 0
-pc demo closeok;pn "gl2 demo";
-xywh 0 0 450 350;
+pc6j demo closeok;pn "gl2 demo";
+xywh 0 0 300 200;
 cc gs isigraph;
 )
 

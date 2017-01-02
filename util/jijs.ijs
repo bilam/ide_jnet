@@ -421,6 +421,12 @@ if. IFSHOW = 0 do.
   if. ARGV -: ,<'undefined' do. return. end.
 end.
 
+if. -.IFJNET do.
+  wd 'setenable labs 0'
+  wd 'setenable labadvance 0'
+  wd 'setenable labchapters 0'
+end.
+
 if. -.IFIOX do.
   wd 'pshow'
   if. IFWINCE do.
