@@ -379,10 +379,10 @@ wdqpx=: (wd bind 'qpx') :: (''"_)
 wdqq=: (wd bind 'q') :: (''"_)
 wdqscreen=: (0 ". wd bind 'qscreen') :: (264 211 800 600 96 96 32 1 _1 36 36 51"_)
 wdqwd=: (wd bind 'qwd')
-readimg_jnet_=: 11:!3000
-getimg_jnet_=: 11:!3001
-writeimg_jnet_=: 11:!3002
-putimg_jnet_=: 11:!3003
+readimg_jnet_=: 11!:3000
+getimg_jnet_=: 11!:3001
+writeimg_jnet_=: 11!:3002
+putimg_jnet_=: 11!:3003
 coclass 'jpick'
 
 
