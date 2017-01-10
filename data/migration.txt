@@ -27,6 +27,9 @@ differences as summarized below.
 
 == incompatible changes
 
+=== combobox and listbox
+   event data ..._select is '_1' instead of '' if no items selected
+
 === creategroup
    creategroup id
      only on tab control. groupbox not supported

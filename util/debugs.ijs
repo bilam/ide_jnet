@@ -1003,7 +1003,7 @@ tbarset stack 18 13 "View stack" "View stack";
 tbarset "" 19 11;
 tbarset clear 20 14 "Clear" "Clear";
 tbarshow;
-xywh 0 0 168 105;cc tabs tab rightmove bottommove;cn "";
+xywh 0 0 168 105;cc tabs tab rightmove bottommove;
 pas 0 0;pcenter;
 rem form end;
 )
