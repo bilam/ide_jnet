@@ -15,7 +15,6 @@ differences as summarized below.
    progid: JEXEServerLib.JEXEServer
    register: jnet.exe /regserver
    unregister: jnet.exe /unregserver
-   known bugs: can not create forms or UI using Do()
 
 == project manager
    J602 ijp decommitted. use J805 jproj project folder.

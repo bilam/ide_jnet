@@ -16,7 +16,7 @@ Linux:
  start J by typing mono jnet.exe
 )
 
-VERSION=: '1.0.6'
+VERSION=: '1.0.7'
 
 PLATFORMS=: 'windows linux'
 
