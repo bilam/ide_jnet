@@ -136,6 +136,6 @@ differences as summarized below.
     47-59   keywords
 
 == Others
-   opengl, multimedia, video not implemented
+   multimedia, video not implemented
    webview depends on IE and does not work on Linux
 

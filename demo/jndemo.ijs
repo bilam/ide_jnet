@@ -38,6 +38,8 @@ pousse dpousse
 progress dprogress
 regular_expressions dregex
 rtf drtf
+shader dshader
+sphere dsphere
 spinbox dspinbox
 timer dtimer
 trackbar dtrackbar
@@ -111,6 +113,8 @@ dprogress=: 'progress' rundemo
 dspinbox=: 'spinbox' rundemo`notsupport@.(-.IFJNET)
 drtf=: 'rtf' rundemo
 dregex=: 'regdemo' rundemo
+dshader=: 'shader' rundemo`notsupport@.(-.IFJNET)
+dsphere=: 'sphere' rundemo`notsupport@.(-.IFJNET)
 dtimer=: 'timer' rundemo
 dtrackbar=: 'trackbar' rundemo`notsupport@.(-.IFJNET)
 dunisimple=: 'unisimple' rundemo

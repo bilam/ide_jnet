@@ -16,7 +16,7 @@ Linux:
  start J by typing mono jnet.exe
 )
 
-VERSION=: '1.0.7'
+VERSION=: '1.0.8'
 
 PLATFORMS=: 'windows linux'
 
@@ -29,6 +29,7 @@ graphics/print
 
 FILES=: 0 : 0
 gl2.ijs
+gl3.ijs
 jnet.ijs
 newuser.ijs
 bin/anycpu/jnet.exe
