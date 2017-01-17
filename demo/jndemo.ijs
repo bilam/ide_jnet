@@ -22,6 +22,7 @@ controls dcontrols
 datetime ddatetime
 edit dedit
 events devents
+excel dexcel
 form dform
 gl2 dgl2
 grid dgrid
@@ -97,6 +98,7 @@ dcontrols=: 'controls' rundemo
 ddatetime=: 'datetime' rundemo`notsupport@.(-.IFJNET)
 dedit=: 'edit' rundemo`notsupport@.(-.IFJNET)
 devents=: 'events' rundemo
+dexcel=: 'excel' rundemo`notsupport@.(-.IFWIN)
 dform=: 'form' rundemo
 dgl2=: 'gl2' rundemo
 dgrid=: 'grid' rundemo

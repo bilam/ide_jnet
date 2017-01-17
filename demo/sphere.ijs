@@ -1,8 +1,10 @@
 coclass 'demosphere'
 
+count=: 0
 A=: 0 : 0
 pc a;
-xywh 0 0 300 300;cc g opengl;
+xywh 0 0 40 20;cc b button;
+xywh 0 20 300 300;cc g opengl;
 rem form end;
 )
 
@@ -24,7 +26,12 @@ glViewport 0 0,wh
 glMatrixMode GL_PROJECTION
 glLoadIdentity''
 gluPerspective 30, (%/wh),1 10
+if. 0=2|count do.
 glClearColor 0 0 0 0
+else.
+glClearColor 0 1 0 0
+end.
+count=: count+1
 glClear GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT
 glEnable GL_DEPTH_TEST
 glMatrixMode GL_MODELVIEW
@@ -50,6 +57,10 @@ glaLight GL_LIGHT0,GL_SPECULAR, 0.0 0.0 0.0 1
 glEnable GL_LIGHTING
 glEnable GL_LIGHT0
 glaMaterial GL_FRONT,GL_AMBIENT_AND_DIFFUSE, 1 0 0 1
+)
+
+a_b_button=: 3 : 0
+wd 'setinvalid g'
 )
 
 a_close=: 3 : 0

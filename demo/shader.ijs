@@ -8,7 +8,7 @@ STOP=: 1
 
 A=: 0 : 0
 pc a;
-minwh 300 300;cc g opengl flush;
+minwh 300 300;cc g opengl version 3.0 flush rightmove bottommove;
 rem form end;
 )
 
@@ -36,10 +36,10 @@ if. p=. glGetString GL_VENDOR do. smoutput 'GL_VENDOR: ', memr 0 _1 2,~ p end.
 if. p=. glGetString GL_RENDERER do. smoutput 'GL_RENDERER: ', memr 0 _1 2,~ p end.
 if. p=. glGetString GL_SHADING_LANGUAGE_VERSION do. smoutput 'GL_SHADING_LANGUAGE_VERSION: ', memr 0 _1 2,~ p end.
 GLSL=: wglGLSL''
+sprog=: 0
 if. GLSL=0 do. return. end.
 
 wglPROC''
-sprog=: 0
 if. GLSL>120 do.
   vsrc=. vsrc2
   fsrc=. fsrc2
@@ -103,6 +103,7 @@ a_g_paint=: 3 : 0
 if. 0=sprog do. return. end.
 
 wh=. glqwh''
+NB. glViewport 0 0,wh
 glClearColor 0 0 0 0
 glClear GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT
 
