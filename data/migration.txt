@@ -7,6 +7,12 @@ differences as summarized below.
    noun JNET_z_ set to 1 by jnet.exe
    wd'qwd' reports 'jwin32' on both Windows and Linux
 
+== jnet.exe
+   3 versions: anycpu, x64 and x86.
+   anycpu is recommended
+   x64 and x86 for running JEXEServer com interop
+   x86 is needed for running J32 on 64-bit platforms
+
 == jqt wd commands
    some jqt wd commands are implemented.
    bin and other related commands are ignored.
@@ -16,13 +22,18 @@ differences as summarized below.
    register: jnet.exe /regserver
    unregister: jnet.exe /unregserver
 
+== opengl
+   implemented as opengl child control class
+   support both legacy and modern opengl
+
 == project manager
    J602 ijp decommitted. use J805 jproj project folder.
 
 == un-implemented wd commands
    clipcopyx clippastex qkeystate sbarshow security setcolwidth
    setpclip tbarshow tnomsgs wait
-   all ole commands
+   all ole commands except: oleget oleid olemethod oleset
+   ocx not supported
 
 == incompatible changes
 

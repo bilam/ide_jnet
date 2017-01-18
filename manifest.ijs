@@ -5,7 +5,7 @@ CAPTION=: 'JNET IDE'
 DESCRIPTION=: 0 : 0
 JNET IDE *not* supported by Jsoftware.
 
-Copy one of jnet.exe from bin to ~bin folder
+Copy one of the three jnet.exe files to your j805 bin directory.
 
 Windows:
  install .net framework 4.0 or later
@@ -16,7 +16,7 @@ Linux:
  start J by typing mono jnet.exe
 )
 
-VERSION=: '1.0.9'
+VERSION=: '1.0.10'
 
 PLATFORMS=: 'windows linux'
 

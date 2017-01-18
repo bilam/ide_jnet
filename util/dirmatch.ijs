@@ -689,7 +689,7 @@ menupopz;
 menupop "&Help";
 menu help "&Help" "" "" "";
 menupopz;
-xywh 0 0 392 52;cc tabs static rightmove;
+xywh 0 0 392 52;cc tabs tab rightmove;
 xywh 0 58 392 1;cc s1 staticbox ss_etchedhorz rightmove;
 xywh 0 61 325 150;cc found editm ws_hscroll ws_vscroll rightmove bottommove;
 xywh 330 61 60 12;cc compare button leftmove rightmove;cn "Co&mpare";
@@ -1244,7 +1244,7 @@ jdmstd_btypes_button=: 3 : 0
 )
 jdmstd_bsource_button=: 3 : 0
 dir=. DMSOURCE,(0=#DMSOURCE)#jpath '~home'
-txt=. dmlower 0 dirbrowse 'Select Folder';dir;0
+txt=. dmlower mbdir 'Select Folder';dir;0
 if. (#txt) > txt -: dmlower source do.
   DMSOURCE=: txt
   DMDIRS=: ~. (<txt), DMDIRS
@@ -1254,7 +1254,7 @@ end.
 )
 jdmstd_btarget_button=: 3 : 0
 dir=. DMTARGET,(0=#DMTARGET)#jpath '~home'
-txt=. dmlower 0 dirbrowse 'Select Folder';dir;0
+txt=. dmlower mbdir 'Select Folder';dir;0
 if. (#txt) > txt -: dmlower target do.
   DMTARGET=: txt
   DMDIRS=: ~. (<txt), DMDIRS
@@ -1319,7 +1319,7 @@ jdmsvn_bvtypes_button=: 3 : 0
 )
 jdmsvn_bvtarget_button=: 3 : 0
 dir=. 0 pick DMSVNS,<jpath '~home'
-txt=. dmlower 0 dirbrowse 'Select Folder';dir;0
+txt=. dmlower mbdir 'Select Folder';dir;0
 if. (#txt) > txt -: dmlower vtarget do.
   DMSVNS=: cleanlist (<txt), DMSVNS
   dmshow''

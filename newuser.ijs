@@ -52,14 +52,14 @@ xywh 8 5 290 15;cc w0 static ss_center;cn "";
 xywh 8 20 292 94;cc g0 groupbox;cn "";
 xywh 13 26 283 84;cc hdr static;cn "";
 xywh 8 120 292 63;cc g1 groupbox;cn "Key Menu Items";
-xywh 13 131 77 10;cc s0 static;cn "";
-xywh 92 131 201 10;cc n0 static;cn "";
-xywh 13 143 77 10;cc s1 static;cn "";
-xywh 92 143 201 10;cc n1 static;cn "";
-xywh 13 155 77 10;cc s2 static;cn "";
-xywh 92 155 201 10;cc n2 static;cn "";
-xywh 13 167 77 10;cc s3 static;cn "";
-xywh 92 167 201 10;cc n3 static;cn "";
+xywh 13 131 86 10;cc s0 static;cn "";
+xywh 101 131 192 10;cc n0 static;cn "";
+xywh 13 143 86 10;cc s1 static;cn "";
+xywh 101 143 192 10;cc n1 static;cn "";
+xywh 13 155 86 10;cc s2 static;cn "";
+xywh 101 155 192 10;cc n2 static;cn "";
+xywh 13 167 86 10;cc s3 static;cn "";
+xywh 101 167 192 10;cc n3 static;cn "";
 xywh 9 189 157 11;cc show checkbox;cn "";
 xywh 225 189 72 12;cc exitj button bs_defpushbutton;cn "E&xit to J Session";
 pas 6 6;pcenter;
@@ -123,3 +123,4 @@ coerase <'jnewuser'
 )
 newuserwd_close=: newuserwd_cancel
 newuserwd_enter=: newuserwd_exitj_button=: newuser_close
+newuserwd_run''

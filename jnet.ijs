@@ -360,6 +360,14 @@ else.
   jpathsep wd 8 u: 'mbsave ',y
 end.
 )
+mbdir=: 3 : 0
+if. IFJNET do.
+  'title dir'=. 2{.y
+  jpathsep wd 'mb dir "',title,'" "', dir, '"'
+else.
+  0 dirbrowse y
+end.
+)
 wdclippaste=: (wd bind 'clippaste') :: (''"_)
 wdqchildxywh=: (0 ". [: wd 'qchildxywh ' , ]) :: (0 0 0 0"_)
 wdqchildxywhx=: (0 ". [: wd 'qchildxywhx ' , ] ) :: (0 0 0 0"_)
