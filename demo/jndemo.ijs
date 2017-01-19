@@ -140,7 +140,7 @@ NB. =========================================================
 jndemo_addons_button=: 3 : 0
 require 'pacman'
 'update' jpkg ''
-'install' jpkg 'graphics/bmp graphics/gl2 graphics/grid graphics/plot graphics/viewmat demos/isigraph demos/wdplot'
+'install' jpkg 'graphics/bmp graphics/gl2 graphics/plot graphics/viewmat demos/isigraph demos/wdplot'
 smoutput 'All JNet demo addons installed.'
 )
 

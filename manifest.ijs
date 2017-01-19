@@ -16,7 +16,7 @@ Linux:
  start J by typing mono jnet.exe
 )
 
-VERSION=: '1.0.10'
+VERSION=: '1.0.11'
 
 PLATFORMS=: 'windows linux'
 
@@ -35,6 +35,7 @@ newuser.ijs
 bin/anycpu/jnet.exe
 bin/x64/jnet.exe
 bin/x86/jnet.exe
+classes/
 config/
 data/
 demo/

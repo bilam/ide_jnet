@@ -3,13 +3,13 @@ NB. JNet
 18!:4 <'z'
 
 buildpublic_j_ 0 : 0
-grid         ~addons/graphics/grid/grid
-jdgrid       ~addons/graphics/grid/jdgrid
-jsgrid       ~addons/graphics/grid/jsgrid
-jttable      ~addons/graphics/grid/jtable
-jtgrid       ~addons/graphics/grid/jtgrid
-jvgrid       ~addons/graphics/grid/jvgrid
-jzgrid       ~addons/graphics/grid/jzgrid
+grid         ~addons/ide/jnet/classes/graphics/grid/grid
+jdgrid       ~addons/ide/jnet/classes/graphics/grid/jdgrid
+jsgrid       ~addons/ide/jnet/classes/graphics/grid/jsgrid
+jttable      ~addons/ide/jnet/classes/graphics/grid/jtable
+jtgrid       ~addons/ide/jnet/classes/graphics/grid/jtgrid
+jvgrid       ~addons/ide/jnet/classes/graphics/grid/jvgrid
+jzgrid       ~addons/ide/jnet/classes/graphics/grid/jzgrid
 )
 
 PATHSEP_j_=: '/'
