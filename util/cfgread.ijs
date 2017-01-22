@@ -75,7 +75,7 @@ if. -.IFCONSOLE do.
   SMINIT_jijs_=: SMINIT
   SMSIZE_jijs_=: SMSIZE
   SMSTYLE_jijs_=: MAXSMSTYLE <. SMSTYLE
-  NEWUSER_jijs_=: NEWUSER
+  if. 0~: 4!:0 <'NEWUSER_jijs_' do. NEWUSER_jijs_=: NEWUSER end.
   wdc 'fontdef ',PROFONT
   if. y do.
     setfontall_jijs_ FIXFONT

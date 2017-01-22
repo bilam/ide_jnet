@@ -78,6 +78,8 @@ glpaintx=: 11!:2021
 glqdpi=: 11!:2347
 glrgba=: 11!:2343
 glsel2=: 11!:2344
+glwaitgl=: 11!:2345
+glwaitnative=: 11!:2346
 
 glreadimg=: 11!:3000
 glgetimg=: 11!:3001

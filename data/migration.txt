@@ -10,12 +10,9 @@ differences as summarized below.
 == jnet.exe
    3 versions: anycpu, x64 and x86.
    anycpu is recommended
+   x64 and x86 only run on Intel/AMD cpu
    x64 and x86 for running JEXEServer com interop
    x86 is needed for running J32 on 64-bit platforms
-
-== jqt wd commands
-   some jqt wd commands are implemented.
-   bin and other related commands are ignored.
 
 == com automation server
    progid: JEXEServerLib.JEXEServer
@@ -29,9 +26,20 @@ differences as summarized below.
 == project manager
    J602 ijp decommitted. use J805 jproj project folder.
 
+== new child classes
+   checkedlistbox datepicker dspinbox editmask editint
+   editnum image isidraw isiprint opengl progressbar
+   spinbox timepicker webview
+
+== new wd commands
+   end get getj getp ide immexj NB. 
+   qfontdef qosver qform
+   setc setj setp verbose version xy wh maxwh minwh
+   bin and other related commands are accepted but ignored
+
 == un-implemented wd commands
-   clipcopyx clippastex qkeystate sbarshow security setcolwidth
-   setpclip tbarshow tnomsgs wait
+   qkeystate sbarshow security setcolwidth setpclip tbarshow
+   tnomsgs wait
    all ole commands except: oleget oleid olemethod oleset
    ocx not supported
 
@@ -42,7 +50,7 @@ differences as summarized below.
 
 === creategroup
    creategroup id
-     only on tab control. groupbox not supported
+   only on tab control. groupbox and static not supported
    setselect id n   to switch and show tabpage
 
 === pc and pc6j

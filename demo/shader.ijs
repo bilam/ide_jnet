@@ -24,7 +24,11 @@ R=: 20 30 0
 EYE=: 0 0 1
 LR=: UD=: IO=: 0
 UP=: 0 1 0
-wd A
+if. 0~:GLES_VERSION_jgles_ do.
+  wd ('opengl version 3.0';'opengl es') stringreplace A
+else.
+  wd A
+end.
 HD=: wd'qhwndc g'
 wd 'pshow'
 )
@@ -54,7 +58,7 @@ end.
 vsrc=. '#version ',(":GLSL),((GLSL>:300)#(*GLES_VERSION){::' core';' es'),LF,vsrc
 fsrc=. '#version ',(":GLSL),((GLSL>:300)#(*GLES_VERSION){::' core';' es'),LF,fsrc
 if.(GLSL>:300)*.0~:GLES_VERSION_jgles_ do.
-  fsrc=. ('void main';'out vec4 gl_FragColor;',LF,'void main') stringreplace fsrc
+  fsrc=. ('in vec4';'in mediump vec4';'gl_FragColor';'glFragColor';'void main';'out mediump vec4 glFragColor;',LF,'void main') stringreplace fsrc
 end.
 smoutput vsrc
 smoutput fsrc
