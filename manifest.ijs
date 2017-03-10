@@ -16,7 +16,7 @@ Linux:
  start J by typing mono jnet.exe
 )
 
-VERSION=: '1.0.13'
+VERSION=: '1.0.14'
 
 PLATFORMS=: 'windows linux'
 
@@ -42,4 +42,4 @@ demo/
 util/
 )
 
-RELEASE=: 'j805'
+RELEASE=: 'j805 j806'
