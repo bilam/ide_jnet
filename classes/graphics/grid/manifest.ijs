@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 Grid
 )
 
-VERSION=: '1.0.31'
+VERSION=: '1.0.32'
 
 PLATFORMS=: 'windows linux'
 
@@ -26,4 +26,4 @@ jzgrid.ijs
 history.txt
 )
 
-RELEASE=: 'j805 j806'
+RELEASE=: 'j805 j806 j807'
