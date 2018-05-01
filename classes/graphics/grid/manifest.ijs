@@ -26,4 +26,6 @@ jzgrid.ijs
 history.txt
 )
 
-RELEASE=: 'j805 j806 j807'
+RELEASE=: 'j805'
+
+FOLDER=: 'ide/jnet/classes/graphics/grid'
