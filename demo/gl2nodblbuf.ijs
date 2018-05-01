@@ -9,7 +9,7 @@ require 'gl2'
 coinsert 'jgl2'
 data=: ''
 wd FORM
-glnodblbuf 0
+glnodblbuf 1
 wd 'pshow'
 NB. should not be needed on other platforms..
 EMPTY
@@ -27,6 +27,9 @@ demo_gs_paint=: 3 : 0
 NB. draw grid
 echo glqwh''
 glfill^:IFJNET 255 255 255 255
+glrgb^:(-.IFJNET) 255 255 255
+glbrush^:(-.IFJNET)''
+glrect^:(-.IFJNET) 0 0,w,h
 glrgb 128 128 18
 glpen 0 1
 for_i. 50* i.>.h%50 do.
@@ -61,8 +64,8 @@ glrgb 255 0 0
 glpen 5 0
 glrgb 0 0 255
 glbrush''
-glclip 40 40 200 100
-glrect 20 20 200 200
+glclip^:IFJNET 40 40 200 100             NB. bug in J602?
+glrect^:IFJNET 20 20 200 200
 glclipreset''
 gllines 10 10 300 300
 

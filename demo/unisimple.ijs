@@ -1,6 +1,6 @@
 NB. unisimple
 
-require 'ide/jnet/util/jview'
+require 'jview'
 
 ABC=: 0 : 0
 pc6j abc;pn "Unicode";
@@ -50,13 +50,13 @@ wd ABC
 wd'setfont b ',font
 wd'setfont em ',font
 if. IFWINCE do.
-btext=: t_name
-wd'setcaption b *',btext
-wd'set em *',t_all
+  btext=: t_name
+  wd'setcaption b *',btext
+  wd'set em *',t_all
 else.
-btext=: c_name
-wd'setcaption b *',btext
-wd'set em *',c_all
+  btext=: c_name
+  wd'setcaption b *',btext
+  wd'set em *',c_all
 end.
 wd 'pshow;'
 )

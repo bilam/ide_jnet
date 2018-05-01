@@ -1,13 +1,13 @@
 require 'project'
 
-coclass 'jproject'
+coclass 'jnproject'
 
 3 : 0 ''
 if. IFCONSOLE do.
   saveopenwindows=: ]
   coinsert 'j'
 else.
-  require 'ide/jnet/util/jview'
+  require 'jview'
   coinsert 'j jijs'
 end.
 )
@@ -73,7 +73,7 @@ if. 0 ~: 4!:0 <'LASTPROJECT_jprojsave_' do. return. end.
 )
 loadps=: 3 : 0
 cocurrent 'base'
-load PROJECTPATH_jproject_,y
+load PROJECTPATH_jnproject_,y
 )
 openp=: 3 : 0
 projreset''
@@ -83,7 +83,7 @@ empty''
 )
 openpr=: 3 : 0
 openp y
-projaddrecent ''
+projaddrecent''
 empty''
 )
 openpp=: 3 : 0
@@ -216,21 +216,12 @@ if. # f=. getselectfiles '' do.
       end.
     elseif. do.
       ext=. < tolower@(}.~ i:&'.') f2
-      msk=. ext e. <;._1 ' .ijs .ijt .ijp .jproj .txt .htm .html .xml .css .c .cpp .h .hpp .q .k .java .asm .bat .cmd .md .js .json .pro .qrc .rc .def .cfg .ini .sh .cs .csv .nsi .nsh .def'
-      if. 1 e. msk do.
-        open_j_ f2
-      elseif. ext e. <;._1 ' .bmp .gif .ico .jpeg .jpg .png' do.
+      if. ext e. <;._1 ' .bmp .gif .ico .jpeg .jpg .png' do.
         viewimage_j_ f2
       elseif. ext e. <;._1 ' .pdf' do.
         viewpdf_j_ f2
       elseif. do.
-        if. 1e6>fsize f2 do.
-          if. _1 -.@-: s=. fread f2 do.
-            if. isutf8 s do.
-              open_j_ f2
-            end.
-          end.
-        end.
+        open_j_ f2
       end.
     end.
   end.
@@ -378,11 +369,11 @@ new
 )
 loadscript=: 3 : 0
 cocurrent 'base'
-load PROJECTPATH_jproject_,y
+load PROJECTPATH_jnproject_,y
 )
 loaddscript=: 3 : 0
 cocurrent 'base'
-loadd PROJECTPATH_jproject_,y
+loadd PROJECTPATH_jnproject_,y
 )
 nounrep=: 3 : 0
 LF ,~ y,'=: ',nounrep1 ". y
@@ -474,7 +465,7 @@ end.
 BFILES=: 0 : 0
 pc6j bfiles owner;
 xywh 3 3 55 11;cc s0 static;cn "Directory:";
-xywh 3 14 55 11;cc currentpath static rightmove;cn "";
+xywh 3 14 188 11;cc currentpath static rightmove;cn "";
 xywh 2 26 148 147;cc bpfiles listbox ws_hscroll ws_vscroll lbs_extendedsel rightmove bottommove;
 xywh 154 26 38 12;cc bopen button leftmove rightmove;cn "&Open";
 xywh 154 157 38 12;cc cancel button leftmove topmove rightmove bottommove;cn "Close";
@@ -578,15 +569,13 @@ wd 'set snapx *', 2 }. ; (<', ') ,each CFSNAPX
 cfg_cancel_button=: wd bind 'pclose'
 pathname=: 3 : '(b#y);(-.b=.+./\.y=PATHSEP)#y'
 fpath=: 3 : 'y#~+./\.y=PATHSEP'
-fexist=: 1:@(1!:4)@boxopen :: 0:
+fexist=: (1:@(1!:4) :: 0:) @ (fboxname &>) @ boxopen
 fexists=: #~ fexist&>
 jpathsep=: '/' & (I.@(=&'\')@]})
 extjproj=: 3 : 0
-y, ((0 < #y) > '.jproj' -: _6 {. y) # '.jproj'
+y, (('.ijp' -: _4 {. y) < ((0 < #y) > '.jproj' -: _6 {. y)) # '.jproj'
 )
-extijs=: 3 : 0
-y, ((0 < #y) > ('.ijl';'.ijs') e.~ < _4 {. y) # '.ijs'
-)
+extijs=: ]
 extnone=: ]
 fullname=: 3 : 0
 if. 0 = # y do. '' return. end.
@@ -713,8 +702,8 @@ projcfgread''
 PID=: ''
 if. #PROJECTFILE do.
   openprojectfile PROJECTFILE
-elseif. #XPROJECTRECENT do.
-  openprojectfile 0 pick XPROJECTRECENT
+elseif. #selproj1 XPROJECTRECENT do.
+  openprojectfile 0 pick selproj1 XPROJECTRECENT
 elseif. 1 do.
   setprojpathfile 0 pick {.UserFolders,a:
 end.
@@ -749,6 +738,7 @@ projsave=: 3 : 0
 projcopyback''
 EMPTY
 )
+selproj1=: (#~ ([:(<'.jproj')&=_6&{.&.>))
 selproj=: (#~ ([:(<'.jproj')&=_6&{.&.>)) @: ({."1)
 seldir=: #~ '-d'&-:"1 @ (1 4&{"1) @ > @ (4&{"1)
 projtree=: 3 : 0
@@ -1018,7 +1008,7 @@ wd 'psel ',HWNDP,';pactive'
 precent_enter=: precent_ok_button=: precent_l0_button=: precent_doit
 precent_cancel=: precent_cancel_button=: precent_close
 plast_run=: 3 : 0
-j=. XPROJECTRECENT -. < PROJECTFILE
+j=. selproj1 XPROJECTRECENT -. < PROJECTFILE
 if. 0 e. #j do.
   info 'No recent project files' return.
 end.
@@ -1039,6 +1029,7 @@ if. 0=#PROJECTFILE do. infonoproj'' return. end.
 runproject1 0
 )
 runproject1=: 3 : 0
+projaddrecent''
 saveopenwindows''
 projsave 0
 f=. PROJECTPATH,'build.ijs'
@@ -1070,7 +1061,7 @@ if. fexist f do.
 end.
 stk=. 13!:13''
 if. # stk do.
-  nms=. ;: 'runtest projectform_runtest_button wdhandler_jproject_'
+  nms=. ;: 'runtest projectform_runtest_button wdhandler_jnproject_'
   if. -. nms -: {."1 stk do.
     smoutput 'Stack cleared - run Test again'
     jdb_close_jdebug_ :: ] ''
@@ -1513,9 +1504,9 @@ dmrun_jdirmatch_ 2 1
 )
 psvn_cpath_select=: psvn_cpath_button
 TEMPLATETEST=: 0 : 0
-buildproject_jproject_ ''
-loadtarget_jproject_ ''
-loadscript_jproject_ 'test0.ijs'
+buildproject_jnproject_ ''
+loadtarget_jnproject_ ''
+loadscript_jnproject_ 'test0.ijs'
 )
 templateijs=: 4 : 0
 ('NB. ',x,LF) fwrites y,x,'.ijs'
@@ -1765,7 +1756,7 @@ projectform_exit_button=: projectform_close
 projectform_gitgui_button=: gitgui
 projectform_gitstatus_button=: gitstatus
 projectform_load_button=: runproject
-projectform_build_button=: buildproject
+projectform_build_button=: buildapp
 projectform_openwin_button=: windows_open
 projectform_plast_button=: plast_run
 projectform_pnew_button=: opennewproject

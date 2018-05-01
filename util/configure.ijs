@@ -1,20 +1,22 @@
-require 'ide/jnet/util/jview'
+require^:(0=4!:0<'IFWIN32') 'jsgrid jzgrid'
+require 'jview'
 coclass 'jcfg'
 
-glbrush=: 		11!:2004
-glclear=: 		11!:2007
-gllines=: 		11!:2015
-glpen=: 		11!:2022
-glrect=: 		11!:2031
-glrgb=: 		11!:2032
-glsel=: 		11!:2035@":
-glpaint=: 		11!:2020
+glbrush=: 11!:2004
+glclear=: 11!:2007
+gllines=: 11!:2015
+glnodblbuf=: 11!:2070
+glpen=: 11!:2022
+glrect=: 11!:2031
+glrgb=: 11!:2032
+glsel=: 11!:2035
+glpaint=: 11!:2020
 delfret=: }: , {: -. PATHSEP_j_"_
 dtb=: #~ +./\.@(' '&~:)
 extijs=: , ([: -. '.'"_ e. ]) # '.ijs'"_
 expand=: #^:_1
 
-fexist=: 1:@(1!:4)@boxopen ::0:
+fexist=: (1:@(1!:4) :: 0:) @ (fboxname &>) @ boxopen
 index=: #@[ (| - =) i.
 info=: wdinfo @ ('Config'&;)
 inx1=: #@[ (| - =) i.
@@ -93,6 +95,27 @@ font=. ' ',y
 b=. (font=' ') > ~:/\font='"'
 a: -.~ b <;._1 font
 )
+cutfolders=: 3 : 0
+if. 0=#y do. i.0 3 return. end.
+if. '''' = {. y do.
+  y=. 3{."1 ".;._2 y
+  (,each 2 {."1 y) 0 1 }"1 y return.
+end.
+j=. <;._2 y
+if. (_2 {. 0 pick j) e. ' ',.'01' do.
+  sub=. <&> 0 ". _2 {.&> j
+  j=. _2 }.each j
+else.
+  sub=. <0
+end.
+ndx=. j i.&> ' '
+nms=. ndx {.each j
+pth=. deb each (ndx+1) }.each j
+if. 0~:4!:0<'IFWIN32' do.
+  sub=. (#nms)#(<0)
+end.
+nms,.pth,.sub
+)
 wdc=: 3 : 0
 try. wd y
 catch.
@@ -109,7 +132,15 @@ end.
 cfread=: 3 : 0
 0!:0 <jpath '~addons/ide/jnet/config/stdcfg.ijs'
 0!:0 :: ] <jpath '~config/config.ijs'
+ADDNAMES=: ''
+0!:0 :: ] <jpath '~addons/config/config.ijs'
+if. #ADDNAMES do.
+  nms=. <;._1 &> ' ' ,each <;._2 jpathsep ADDNAMES
+  nms=. nms ,each "1 '';'~addons',PATHSEP_j_
+  Public_j_=: /:~ ~. Public_j_,nms
+end.
 OUTPUT=: 0, }. OUTPUT
+USERFOLDERS=: cutfolders USERFOLDERS
 FORMAT=: FORMAT,(#FORMAT) }. 1 0 2 1 0 0
 )
 configure=: 3 : 0
@@ -127,7 +158,11 @@ configrun=: 3 : 0
 9!:17 BOXPOS
 9!:21 (2&^ ^: (<&_)) MEMORYLIM
 9!:37 OUTPUT
-9!:49 XNAMES
+9!:49 ::0: XNAMES
+11!:0 ::0: 'setj mb ', ":OPTMB
+11!:0 ::0: 'setj oldisigraph ', ":OPTOLDISIGRAPH
+11!:0 ::0: 'setj pc6j ', ":OPTPC6J
+11!:0 ::0: 'setj twip ', ":OPTTWIP
 if. IFUNIX do.
   FIXFONT_z_=: FIXFONTJ
   PROFONT_z_=: PROFONTJ
@@ -139,15 +174,22 @@ FIXFONTWH_z_=: (fixfontsize ::])^:(-.IFCONSOLE) 8 16
 FIXFONTDEF_jijs_=: FIXFONT_z_
 CONFIRMCLOSE_j_=: CONFIRMCLOSE
 DIRTREEX_j_=: DIRTREEX
+EPSREADER_j_=: EPSREADER
 FORMAT_j_=: FORMAT
 FORMSIZES_j_=: FORMSIZES
 P2UPFONT_j_=: P2UPFONT
+PDFREADER_j_=: PDFREADER
 PRINTERFONT_j_=: PRINTERFONT
 PRINTOPT_j_=: PRINTOPT
 READONLY_j_=: READONLY
 SHOWSIP_j_=: SHOWSIP
 SMPRINT_j_=: SMPRINT
 STARTUP_j_=: STARTUP
+if. 0~:4!:0<'IFWIN32' do.
+else.
+  USERFOLDERS_j_=: USERFOLDERS
+end.
+XDIFF_j_=: XDIFF
 
 if. -.IFCONSOLE do.
   clr=. getcolors SMCOLOR
@@ -326,7 +368,7 @@ if. #arg do.
   arg=. }: ; ,&' ' &.> arg
 end.
 if. IFJNET do.
-  res=. wd 'mb font "Select font" ',arg
+  res=. wd 'mbfont "Select font" ',arg
 else.
   res=. wd 'mbfont ',arg
 end.
@@ -537,6 +579,7 @@ rem form end;
 cfcolor_run=: 3 : 0
 if. y=0 do.
   wd CFCOLOR
+  if. IFJNET do. glnodblbuf 0 end.
 end.
 glsel 'gcolor'
 COLORDATA=: getcolordata SMCOLOR
@@ -1330,6 +1373,334 @@ j=. j ,each val ,each (<')',LF,LF)
 dat=. _2 }. ; j
 (CSFILEHEADER, dat) fwrites CSFILE
 )
+EXGRIDNAMES=: 'cellalign celldata cellmark colscale gridid gridmargin gridpid hdrcol'
+EXNOUNS=: <;._2 (0 : 0)
+EPSREADER EPS Reader
+XDIFF File Comparison
+PDFREADER PDF Reader
+BROWSER Web Browser
+)
+EXDESCS=: <@}:@; ;._1 (,LF);<;.2 (0 : 0)
+Read Encapsulated PostScript files.
+
+File Comparison/Merge.
+
+Read Adobe PDF files.
+
+Web Browser, required for online help.
+)
+CFEXTERN=: 0 : 0
+pc6j cfextern;
+xywh 6 6 288 160;cc g0 groupbox rightmove bottommove;cn "External Programs";
+xywh 12 17 276 144;cc xgrid isigraph rightmove bottommove;
+xywh 6 172 288 93;cc g1 groupbox topmove rightmove bottommove;cn "Edit External Program";
+xywh 11 184 45 11;cc lab1 static topmove bottommove;cn "Name:";
+xywh 59 184 198 12;cc xname static topmove rightmove bottommove;
+xywh 11 199 45 11;cc lab2 static topmove bottommove;cn "Command:";
+xywh 59 199 229 12;cc xedcmd edit es_autohscroll topmove rightmove bottommove;
+xywh 124 248 52 12;cc xselect button leftmove topmove rightmove bottommove;cn "Select...";
+xywh 179 248 52 12;cc xbrowse button leftmove topmove rightmove bottommove;cn "Browse...";
+xywh 233 248 52 12;cc xreplace button leftmove topmove rightmove bottommove;cn "&Accept";
+xywh 12 214 274 30;cc xinfo static topmove rightmove bottommove;cn "xinfo";
+pas 2 2;pcenter;
+rem form end;
+)
+cfextern_run=: 3 : 0
+if. y=0 do.
+
+  dat=. EPSREADER;XDIFF;PDFREADER;BROWSER
+  nouns=. EXNOUNS
+  ndx=. nouns i.&> ' '
+  EXNAMES=: ndx {.each nouns
+  EXIDS=: (ndx+1) }.each nouns
+  EXDEFS=: cfexdefs EXNAMES
+  EXDEFX=: defremNB EXDEFS
+  EXDATA=: EXIDS,.dat
+  EXNDX=: 0
+  wd CFEXTERN
+  if. IFJNET do. glnodblbuf 0 end.
+  xgrid=: '' conew 'jsgrid'
+end.
+cfextern_xgrid_paint''
+)
+
+cfextern_act=: ]
+cfextern_xbrowse_button=: 3 : 0
+f=. cfextern_browsefile 1 pick EXNDX { EXDATA
+if. #f do.
+  cfextern_xreplace f
+end.
+)
+cfextern_xgrid_paint=: 3 : 0
+celldata=. EXDATA
+cellalign=. 0
+cellmark=. EXNDX,0
+colscale=. 1 3
+gridid=. 'xgrid'
+gridmargin=. 3 2 1 0
+gridpid=. 'cfextern'
+hdrcol=. 'Name';'Command String'
+show__xgrid pack EXGRIDNAMES
+cfextern_xgrid_paintdetails''
+)
+cfextern_xgrid_paintdetails=: 3 : 0
+'j s'=. EXNDX { EXDATA
+wd 'set xname *',j
+wd 'set xedcmd *',s
+wd 'set xinfo *',EXNDX pick EXDESCS
+wd 'setenable xselect ',":0 < (#EXNDX pick EXDEFX) -. <s
+)
+cfextern_xreplace_button=: 3 : 0
+cfextern_xreplace xedcmd
+)
+cfextern_xselect_button=: 3 : 0
+cmd=. (<xedcmd) -. EXNDX pick EXDEFX
+if. #cmd do.
+  EXDEFS=: (<cmd,EXNDX pick EXDEFS) EXNDX } EXDEFS
+  EXDEFX=: (<cmd,EXNDX pick EXDEFX) EXNDX } EXDEFX
+end.
+cfselect_run (EXNDX { EXDEFS),0;'cfextern_xselect_do'
+)
+cfextern_xselect_do=: 3 : 0
+if. #y do.
+  sel=. deb (1 i.~ 'NB.' E. y) {. y
+  if. #sel do.
+    cfextern_xreplace sel
+  end.
+end.
+)
+cfextern_browsefile=: 3 : 0
+if. #y do. 'p f'=. pathname y
+else.
+  p=. jpath '~home'
+  f=. ''
+end.
+j=. IFWIN#'Applications (*.exe)|*.exe|'
+j=. '"',j,'All Files (*.*)|*.*"'
+j=. j,' ofn_filemustexist ofn_nochangedir'
+if. IFJNET do.
+  wd 'mbopen6 "Open File" "',p,'" "',f,'" ',j
+else.
+  wd 'mbopen "Open File" "',p,'" "',f,'" ',j
+end.
+)
+cfextern_xreplace=: 3 : 0
+EXDATA=: (<y) (<EXNDX;1)} EXDATA
+cfextern_xgrid_paint''
+)
+xgrid_gridhandler=: 3 : 0
+select. y
+case. 'mark' do.
+  EXNDX=: {. CELLMARK__xgrid
+  cfextern_xgrid_paintdetails''
+end.
+1
+)
+cfexdefs=: 3 : 0
+r=. ''
+for_n. y do.
+  r=. r, <boxxopen ('def',tolower >n)~''
+end.
+)
+cfwhich=: 3 : 0
+r=. ''
+for_d. y do.
+  r=. r,<LF -.~ 2!:0 ::(''"_)'which ',(>d),' 2>/dev/null'
+end.
+~. r-.a:
+)
+defbrowser=: 3 : 0
+if. UNAME -: 'Darwin' do. 'open' return. end.
+if. IFWIN do. dlft_shellopen '.htm' return. end.
+cfwhich ;: 'firefox mozilla netscape konqueror'
+)
+defepsreader=: 3 : 0
+if. IFWIN do.
+  dlft_shellopen '.eps'
+else.
+  cfwhich ;: 'acroread evince xgdvi'
+end.
+)
+defpdfreader=: 3 : 0
+if. IFWIN do.
+  dlft_shellopen '.pdf'
+else.
+  cfwhich ;: 'acroread evince'
+end.
+)
+defxdiff=: 3 : 0
+''
+)
+defremNB=: 3 : 0
+deb @ ({.~ 1 i.~ 'NB. ' E. ]) L: 0 y
+)
+CFGRIDNAMES=: 'cellalign celldata cellmark colscale gridmargin gridpid hdrcol'
+
+CFFOLDER=: 0 : 0
+pc6j cffolder closeok owner;pn "User Folders";
+xywh 3 6 288 196;cc Folders groupbox rightmove bottommove;
+xywh 9 17 276 164;cc grid isigraph rightmove bottommove;
+xywh 9 185 60 12;cc up button topmove bottommove;cn "Move &Up";
+xywh 71 185 60 12;cc down button topmove bottommove;cn "Move Do&wn";
+xywh 222 185 60 12;cc delete button leftmove topmove rightmove bottommove;cn "&Delete";
+xywh 3 206 288 59;cc g0 groupbox topmove rightmove bottommove;cn "Edit Folder";
+xywh 8 218 33 11;cc label static topmove bottommove;cn "Name:";
+xywh 42 218 168 12;cc desc edit ws_border es_autohscroll topmove rightscale bottommove;
+xywh 8 234 33 11;cc label static topmove bottommove;cn "Folder:";
+xywh 42 234 241 12;cc efolder edit ws_border es_autohscroll topmove rightmove bottommove;
+xywh 215 218 66 11;cc ifsub checkbox leftmove topmove rightmove bottommove;cn "Subfolder";
+xywh 8 250 60 12;cc addtop button topmove bottommove;cn "Add at &top";
+xywh 70 250 60 12;cc addend button topmove bottommove;cn "Add at &end";
+xywh 222 250 60 12;cc replace button leftmove topmove rightmove bottommove;cn "&Replace";
+pas 2 2;pcenter;
+rem form end;
+)
+cffolder_run=: 3 : 0
+if. y=0 do.
+  wd CFFOLDER
+  if. IFJNET do. glnodblbuf 0 end.
+  if. 0~:4!:0<'IFWIN32' do.
+    wd 'setenable ifsub 0'
+  end.
+  grid=: '' conew 'jsgrid'
+  FNDX=: 0
+end.
+cffolder_grid_paint''
+)
+
+cffolder_act=: ]
+cffolder_grid_paint=: 3 : 0
+if. #USERFOLDERS do.
+  FNDX=: FNDX <. <:#USERFOLDERS
+  a=. 0 {"1 USERFOLDERS
+  b=. 1 {"1 USERFOLDERS
+  if. 0~:4!:0<'IFWIN32' do.
+    c=. 0#~ #a
+  else.
+    c=. ; 2 {"1 USERFOLDERS
+  end.
+  c=. <"0 c { ' s'
+  celldata=. a,.c,.b
+  cellalign=. 0 1 0
+  cellmark=. FNDX,0
+  colscale=. 1 0 3
+  gridmargin=. 3 2 1 0
+  gridpid=. 'cffolder'
+  hdrcol=. 'Name';'Sub';'Folder Path'
+  show__grid pack CFGRIDNAMES
+  cffolder_grid_paintdetails''
+end.
+)
+cffolder_grid_paintdetails=: 3 : 0
+if. 0 <: FNDX do.
+  'j k s'=. 3{. FNDX { USERFOLDERS
+  wd 'set desc *',j
+  wd 'set efolder *',delfret k
+  if. 0~:4!:0<'IFWIN32' do.
+    wd 'set ifsub 0'
+  else.
+    wd 'set ifsub ',": s
+  end.
+end.
+)
+cffolder_up_button=: 3 : 0
+ndx=. {. CELLMARK__grid
+ind=. ndx, ndx1=. 0 >. ndx-1
+USERFOLDERS=: (|.ind{USERFOLDERS) ind} USERFOLDERS
+FNDX=: ndx1
+cffolder_grid_paint''
+)
+cffolder_down_button=: 3 : 0
+ndx=. {. CELLMARK__grid
+ind=. ndx, ndx1=. (<:#USERFOLDERS) <. ndx+1
+USERFOLDERS=: (|.ind{USERFOLDERS) ind} USERFOLDERS
+FNDX=: ndx1
+cffolder_grid_paint''
+)
+cffolder_delete_button=: 3 : 0
+ndx=. {. CELLMARK__grid
+if. 1=#USERFOLDERS do.
+  info 'You cannot delete the only folder' return.
+end.
+msg=. 'OK to delete: ',>{.ndx{USERFOLDERS
+if. 0=2 query msg do.
+  USERFOLDERS=: USERFOLDERS #~ -. (i.#USERFOLDERS) e. ndx
+  FNDX=: (<:#USERFOLDERS) <. ndx
+  cffolder_grid_paint''
+end.
+)
+cffolder_addtop_button=: 3 : 0
+if. cffolder_addcheck 0 do.
+  USERFOLDERS=: ~. (desc;efolder;0".ifsub),USERFOLDERS
+  FNDX=: 0
+  cffolder_grid_paint''
+end.
+)
+cffolder_addend_button=: 3 : 0
+if. cffolder_addcheck 0 do.
+  USERFOLDERS=: ~. USERFOLDERS, desc;efolder;0".ifsub
+  FNDX=: ({."1 USERFOLDERS) i. <desc
+  cffolder_grid_paint''
+end.
+)
+cffolder_ifsub_button=: 3 : 0
+if. '0'=ifsub do. return. end.
+cffolder_readadd''
+if. -. issubfolder efolder do.
+  info 'No parent folder for this subfolder'
+  wd 'set ifsub 0'
+end.
+)
+cffolder_replace_button=: 3 : 0
+if. cffolder_addcheck 1 do.
+  ndx=. {. CELLMARK__grid
+  USERFOLDERS=: (desc;efolder;0".ifsub) ndx} USERFOLDERS
+  FNDX=: ndx
+  cffolder_grid_paint''
+end.
+)
+cffolder_readadd=: 3 : 0
+desc=: deb desc
+efolder=: jpathsep deb efolder
+efolder=: (-PATHSEP_j_={:efolder)}.efolder
+)
+cffolder_addcheck=: 3 : 0
+
+cffolder_readadd''
+sub=. 0".ifsub
+
+if. (desc;efolder;sub) e. USERFOLDERS do. 0 return. end.
+r=. 0
+if. sub do.
+  if. -. issubfolder efolder do.
+    info 'Cannot make this a subfolder, as there is no parent folder.'
+    0 return.
+  end.
+end.
+if. 0=#desc do.
+  info 'Enter the name'
+elseif. 20<#desc do.
+  info 'Name may not exceed 20 characters'
+elseif. 0=#efolder do.
+  info 'Enter the folder paths'
+elseif. y < (<desc) e. {."1 USERFOLDERS do.
+  info 'Name already in use'
+elseif. y < (<efolder) e. {:"1 USERFOLDERS do.
+  info 'Folder already in use'
+elseif. 1 do.
+  r=. 1
+end.
+
+r
+)
+grid_gridhandler=: 3 : 0
+select. y
+case. 'mark' do.
+  FNDX=: {. CELLMARK__grid
+  cffolder_grid_paintdetails''
+end.
+1
+)
 FORMNOTES=: textline 0 : 0
 Control sizes are derived from these values.
 Label height is normally less than edit height
@@ -1601,20 +1972,28 @@ SMSIZE
 SMSTYLE
 BOXFORM
 BOXPOS
+BROWSER
 CONFIRMCLOSE
 DIRTREEX
 DISPLAYFORM
+EPSREADER
 FORMAT
 FORMSIZES
 MEMORYLIM
 NEWUSER
+OPTMB
+OPTOLDISIGRAPH
+OPTPC6J
+OPTTWIP
 OUTPUT
+PDFREADER
 PRINTPREC
 READONLY
 SHOWSIP
 SMCOLORID
 STARTUP
 STATUSBAR
+XDIFF
 XNAMES
 )
 CFGLISTS=: <;._2 (0 : 0)
@@ -1653,27 +2032,52 @@ else.
   y,'=: '''''
 end.
 )
+cfguserfolders=: 3 : 0
+if. 0~:4!:0<'IFWIN32' do.
+  cf=. UserFolders_j_
+else.
+  cf=. USERFOLDERS_j_
+end.
+if. 0 = #cf do.
+  'USERFOLDERS=: ''''',LF return.
+end.
+cf=. cf,. (<0)#~#cf
+txt=. quote each 2 {."1 cf
+if. 0~:4!:0<'IFWIN32' do.
+  flg=. (#cf)#<'0'
+else.
+  flg=. ": each 2 }."1 cf
+end.
+usr=. ; (txt,.flg) ,each "1 ';;',LF
+'USERFOLDERS=: 0 : 0',LF,usr,')',LF
+)
 configsave=: 3 : 0
 FKEYS=: configclean FKEYS
 j=. 'NB. configuration';''
 j=. j, cfgitem each CFGITEMS
 j=. j, cfglist each CFGLISTS
 j=. ; j ,each LF
+j=. j, cfguserfolders ''
 j=. toHOST j
 j 1!:2 :: ] <jpath '~config/config.ijs'
 )
 CFSESS=: 0 : 0
 pc6j cfsess;
-xywh 6 11 288 66;cc g0 groupbox;cn "Directory Exclusion";
-xywh 11 21 276 36;cc sn static;cn "ln";
-xywh 11 58 276 12;cc dirtreex edit ws_border es_autohscroll;
-xywh 6 87 288 80;cc g1 groupbox;cn "Open Script Read Only State";
-xywh 11 102 276 22;cc rostate static;cn "ln";
-xywh 11 127 240 10;cc rb0 radiobutton;cn "All scripts";
-xywh 11 140 240 10;cc rb1 radiobutton group;cn "Scripts under ~install except those under ~temp or ~user";
-xywh 11 153 240 10;cc rb2 radiobutton group;cn "None - all scripts are opened editable";
-xywh 6 177 288 31;cc g2 groupbox;cn "Session Close";
-xywh 12 190 276 12;cc confirmclose checkbox;cn "confirmclose";
+xywh 6 4 288 66;cc g0 groupbox;cn "Directory Exclusion";
+xywh 11 16 276 36;cc sn static;cn "ln";
+xywh 11 53 276 12;cc dirtreex edit ws_border es_autohscroll;
+xywh 6 72 288 80;cc g1 groupbox;cn "Open Script Read Only State";
+xywh 11 88 276 22;cc rostate static;cn "ln";
+xywh 11 112 240 10;cc rb0 radiobutton;cn "All scripts";
+xywh 11 124 240 10;cc rb1 radiobutton group;cn "Scripts under ~install except those under ~temp or ~user";
+xywh 11 140 240 10;cc rb2 radiobutton group;cn "None - all scripts are opened editable";
+xywh 6 156 288 29;cc g2 groupbox;cn "Session Close";
+xywh 12 168 276 12;cc confirmclose checkbox;cn "confirmclose";
+xywh 6 190 288 61;cc legacyoption groupbox;cn "Legacy Option";
+xywh 12 202 276 11;cc optpc6j checkbox;cn "Create form using J6 dialog unit";
+xywh 12 214 276 11;cc optmb checkbox;cn "J6 mb command syntax";
+xywh 12 226 276 11;cc opttwip checkbox;cn "printer using twip measurement unit";
+xywh 12 238 276 11;cc optoldisigraph checkbox;cn "old isigraph";
 pas 6 6;
 rem form end;
 )
@@ -1698,6 +2102,10 @@ cfsess_read=: 3 : 0
 CONFIRMCLOSE=: 0 ". confirmclose
 DIRTREEX=: cutcommas dirtreex
 READONLY=: (rb0,rb1,rb2) i. '1'
+OPTMB=: 0 ". optmb
+OPTOLDISIGRAPH=: 0 ". optoldisigraph
+OPTPC6J=: 0 ". optpc6j
+OPTTWIP=: 0 ". opttwip
 )
 cfsess_set=: 3 : 0
 wd 'set confirmclose ',":CONFIRMCLOSE
@@ -1705,6 +2113,10 @@ wd 'set dirtreex *', }. ; ',' ,each DIRTREEX
 wd 'set rb0 ',":READONLY=0
 wd 'set rb1 ',":READONLY=1
 wd 'set rb2 ',":READONLY=2
+wd 'set optmb ',":OPTMB
+wd 'set optoldisigraph ',":OPTOLDISIGRAPH
+wd 'set optpc6j ',":OPTPC6J
+wd 'set opttwip ',":OPTTWIP
 )
 SKEYNOTES=: textline 0 : 0
 Definitions take effect when you next load J.
@@ -1944,6 +2356,7 @@ rem form end;
 cfview_run=: 3 : 0
 if. y=0 do.
   wd CFVIEW
+  if. IFJNET do. glnodblbuf 0 end.
   DISPLAYFORM=: 9!:2''
 end.
 GPOSORG=: 0 ". wd 'qchildxywhx gpos'
@@ -2036,6 +2449,7 @@ j=. <;._2 (0 : 0)
 cfview Display
 cfcolor Color
 cffkeys Fkeys
+cffolder Folders
 cflint Format Script
 cfforms Forms
 cfopts Parameters
@@ -2043,17 +2457,18 @@ cfprint Print
 cfsess Session
 cfskeys Shortcuts
 cfstart Startup
+cfextern External Programs
 )
 
 ndx=. j i.&> ' '
-TABGROUPS=: ndx {.each j
-TABNAMES=: (ndx+1) }.each j
+TABGROUPS=: ((i.12)-.(0~:4!:0<'IFWIN32')#3 11){ ndx {.each j
+TABNAMES=: ((i.12)-.(0~:4!:0<'IFWIN32')#3 11){ (ndx+1) }.each j
 ALLTABGROUPS=: TABGROUPS
 CFMAIN=: 0 : 0
 pc6j cfmain;pn "Configure";
 xywh 3 4 86 192;cc t0 groupbox;cn "Category";
 xywh 6 16 80 178;cc category listbox ws_vscroll;
-xywh 94 0 300 265;cc tabs tab;
+xywh 94 0 300 265;cc tabs groupbox;
 xywh 12 206 69 10;cc saveconfig checkbox;cn "Save Config";
 xywh 15 219 60 12;cc default button;cn "Set Defaults";
 xywh 15 233 60 12;cc cancel button;cn "Cancel";
@@ -2167,5 +2582,13 @@ end.
 wd 'setshow ',(TABNDX pick TABGROUPS),' 0'
 TABNDX=: ndx
 wd 'setshow ',new,' 1'
+select. new
+case. 'cfextern' do.
+  if. IFUNIX do.
+    wd 'setshow bdef 0'
+    wd 'setshow bepsdef 0'
+    wd 'setshow bpdfdef 0'
+  end.
+end.
 )
 config 0

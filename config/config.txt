@@ -30,19 +30,29 @@ SMPRINT session manager print function
 SMSIZE new window size
 
 BOXPOS boxed output positioning
+BROWSER browser, used in Help
 CONFIRMCLOSE 1 if confirm on close J
 DIRTREEX exclusion list for dirtree
 DISPLAYFORM output display form
+EPSREADER reading encapsulated postscript files
 FKEYS function key definitions
 FORMAT configure Format Script menu item
 FORMSIZES form sizes
 MEMORYLIM memory limit
 NEWUSER if newuser
+OPTMB 1 if J6 mb command syntax
+OPTOLDISIGRAPH 1 if old isigraph
+OPTPC6J 1 if create form using J6 dialog unit
+OPTTWIP 1 if printer using twip measurement unit
 OUTPUT output definition
+PDFREADER reading Adobe pdf files
 PRINTPREC print precision
 READONLY open file read state
 SHOWSIP if show soft keyboard on PPC
 SKEYS menu shortcut key definitions
 STARTUP user's start up file
 STATUSBAR if show statusbar (not used in J5)
+USERFOLDERS user folders
+USERSUBFOLDERS user subfolders
+XDIFF external differencing program
 XNAMES if explicit argument names y. are permitted

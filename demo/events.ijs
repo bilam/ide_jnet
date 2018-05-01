@@ -2,7 +2,7 @@ NB. illustrates events in J
 
 coclass 'jevents'
 coinsert 'jgl2'
-require 'ide/jnet/util/jview'
+require 'jview'
 require 'numeric text trig'
 
 
@@ -58,7 +58,7 @@ xywh 111 166 42 11;cc showmbldown checkbox bs_lefttext;cn "mbldown";
 xywh 111 180 42 11;cc showmblup checkbox bs_lefttext;cn "mblup";
 xywh 111 194 42 11;cc showmbrdown checkbox bs_lefttext;cn "mbrdown";
 xywh 111 208 42 11;cc showmbrup checkbox bs_lefttext;cn "mbrup";
-xywh 164 155 74 67;cc g isigraph ws_border rightmove bottommove;
+xywh 164 155 74 67;cc g isigraph ws_border;
 xywh 150 231 40 11;cc cancel button;cn "Cancel";
 xywh 192 231 40 11;cc ok button;cn "OK";
 pas 4 2;pcenter;
@@ -136,7 +136,7 @@ glpaint ''
 NB. =========================================================
 events_default=: 3 : 0
 
-if. (sysevent -: 'events_g_focus') +. sysevent -: 'events_g_focuslost' do.
+if. (sysevent -: 'events_g_paint') +. (sysevent -: 'events_g_focus') +. sysevent -: 'events_g_focuslost' do.
   if. sysevent -: syseventlast do. return. end.
 end.
 

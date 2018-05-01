@@ -142,7 +142,7 @@ newtext=: 3 : 0
 
 NB. =========================================================
 regdemo_open_button=: 3 : 0
-f=. wd 'mb open6 "Open File" "" "" "Text files|*.txt|Script files|*.ijs|All files|*.*" ofn_filemustexist'
+f=. mbopen '"Open File" "" "" "Text files|*.txt|Script files|*.ijs|All files|*.*" ofn_filemustexist'
 if. *#f do. newtext fread f end.
 )
 

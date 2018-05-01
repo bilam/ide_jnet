@@ -170,7 +170,7 @@ jdb_info=: 3 : 0
 if. 0 = #a do. a=. 'Debug' end.
 if. 2=#$b=. ":b do. b=. }.,LF,.b end.
 f=. DEL&, @ (,&DEL) @ -.&(0 127{a.)
-empty jdb_wd 'mb ',(f a),' ',(f b),' mb_iconinformation'
+empty jdb_wd 'mbmsg ',(f a),' ',(f b),' mb_iconinformation'
 )
 jdb_listboxed=: }. @; @: (LF&, &.>)
 jdb_listmatrix=: [: }. [: , LF&,.
@@ -210,7 +210,7 @@ ndx=. 0 1;2 1;3 4;3 4 1;5 2 6
 b=. y
 if. 2=#$b=. ":b do. b=. }.,LF,.b end.
 f=. DEL&, @ (,&DEL) @ -.&(0 127{a.)
-m=. 'mb ',(f 'Debug'),' ',(f b),' mb_iconquestion mb_',>t{msg
+m=. 'mbmsg ',(f 'Debug'),' ',(f b),' mb_iconquestion mb_',>t{msg
 if. d e. 1 2 do. m=. m,' mb_defbutton',":>:d end.
 (res {~ >t{ndx) i. <jdb_wd m
 )
@@ -1003,7 +1003,7 @@ tbarset stack 18 13 "View stack" "View stack";
 tbarset "" 19 11;
 tbarset clear 20 14 "Clear" "Clear";
 tbarshow;
-xywh 0 0 168 105;cc tabs tab rightmove bottommove;
+xywh 0 0 168 105;cc tabs groupbox rightmove bottommove;
 pas 0 0;pcenter;
 rem form end;
 )

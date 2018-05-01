@@ -261,6 +261,7 @@ rem form end;
 jdbview_run=: 3 : 0
 wd JDBVIEW
 VHWNDP=: wd 'qhwndp'
+if. IFJNET do. glnodblbuf 0 end.
 destroy=: jdbviewdestroy
 formx=. 0 ". wd 'qformx'
 wh=. _2 {. 0 ". wd 'qchildxywhx grid'

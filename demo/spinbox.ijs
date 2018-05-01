@@ -21,7 +21,7 @@ coclass 'jndemo'
 
 NB. =========================================================
 SPdemo=: 0 : 0
-pc spinboxdemo;
+pc8j spinboxdemo;
 xywh 10 10 100 40;cc int spinbox _20 1 20 7;
 xywh 10 140 100 40;cc double dspinbox 2 _200 10.5 200 7;
 )

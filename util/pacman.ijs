@@ -35,7 +35,11 @@ setfiles=: 3 : 0
 ADDCFG=: jpath '~addons/config',PATHSEP
 makedir ADDCFG
 ADDCFGIJS=: ADDCFG,'config.ijs'
-JRELEASE=: ({.~i.&'/') 9!:14''
+if. 0: ~: 4!:0 @ < 'JLIB' do.
+  JRELEASE=: ({.~i.&'/') 9!:14''
+else.
+  JRELEASE=: 'j','.'-.~({.~i:&'.') JLIB
+end.
 LIBTREE=: readtree''
 WWW=: 'http://www.jsoftware.com/jal/',JRELEASE,'/'
 LIBVER=: jpath '~system/config/version.txt'
@@ -306,7 +310,7 @@ e=. 'Unexpected unzip error'
 if. IFUNIX do.
   notarcmd=. IFIOS
   if. UNAME-:'Android' do.
-    notarcmd=. _1-: 2!:0 ::_1: 'which tar'
+    notarcmd=. _1-: 2!:0 ::_1: 'which tar 2>/dev/null'
     if. (UNAME-:'Android') > '/mnt/sdcard'-:2!:5'EXTERNAL_STORAGE' do. notarcmd=. 1 end.
   end.
   if. notarcmd do.
@@ -462,12 +466,12 @@ txt=. ": 6!:0 ''
 txt fwrites ADDCFG,'lastupdate.txt'
 )
 checklastupdate=: 3 : 0
-  if. _1 -: LASTUPD do.
-    res=. 'has never been updated.'
-  else.
-    res=. 'was last updated: ',timestamp LASTUPD
-  end.
-  'Local JAL information ',res
+if. _1 -: LASTUPD do.
+  res=. 'has never been updated.'
+else.
+  res=. 'was last updated: ',timestamp LASTUPD
+end.
+'Local JAL information ',res
 )
 PACMANCFG=: jpath '~config/pacmancfg.ijs'
 
@@ -494,11 +498,11 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  e=. shellcmd cmd
+  fail=. _1-: e=. shellcmd cmd
 catch. fail=. 1 end.
 if. fail +. 0 >: fsize p do.
   if. _1-:msg=. freads q do.
-    if. 0=#msg=. e do. msg=. 'Unexpected error' end. end.
+    if. (_1-:msg) +. 0=#msg=. e do. msg=. 'Unexpected error' end. end.
   log 'Connection failed: ',msg
   info 'Connection failed:',LF2,msg
   r=. 1;msg
@@ -531,24 +535,24 @@ readlocal''
 pacman_init 0
 )
 install_console=: 3 : 0
-  if. -. init_console 'server' do. '' return. end.
-  pkgs=. getnames y
-  pkgs=. pkgs (e. # [) 1{"1 PKGDATA
-  if. 0 = num=. #pkgs do. '' return. end.
-  many=. 1 < num
-  msg=. 'Installing ',(":num),' package',many#'s'
-  log msg
-  installdo pkgs
-  log 'Done.'
-  readlocal''
-  pacman_init ''
-  checkstatus''
+if. -. init_console 'server' do. '' return. end.
+pkgs=. getnames y
+pkgs=. pkgs (e. # [) 1{"1 PKGDATA
+if. 0 = num=. #pkgs do. '' return. end.
+many=. 1 < num
+msg=. 'Installing ',(":num),' package',many#'s'
+log msg
+installdo pkgs
+log 'Done.'
+readlocal''
+pacman_init ''
+checkstatus''
 )
 upgrade_console=: 3 : 0
-  if. -. init_console 'read' do. '' return. end.
-  if. 0=#pkgs=. getnames y do. pkgs=. 1{"1 PKGDATA end.
-  pkgs=. pkgs (e. # [) (pkgups # 1&{"1@])PKGDATA
-  install_console pkgs
+if. -. init_console 'read' do. '' return. end.
+if. 0=#pkgs=. getnames y do. pkgs=. 1{"1 PKGDATA end.
+pkgs=. pkgs (e. # [) (pkgups # 1&{"1@])PKGDATA
+install_console pkgs
 )
 installdo=: 3 : 0
 msk=. -. y e. <BASELIB
@@ -623,98 +627,98 @@ txt=. txt,'ADDLABS=: 0 : 0',LF,ADDLABS,')',LF
 txt fwrites ADDCFGIJS
 )
 show_console=: 4 : 0
-  if. -. init_console 'read' do. '' return. end.
-  select. x
-  case. 'search' do.
-    pkgs=. getnames y
-    res=. (pkgsearch pkgs) # 1 2 3 4 {"1 PKGDATA
-    res=. curtailcaption res
-  case. 'show' do.
-    pkgs=. getnames y
-    res=. (msk=. pkgshow pkgs) # 5 {"1 PKGDATA
-    if. #res do.
-      res=. ,((<'== '), &.> msk # 1 {"1 PKGDATA) ,. res
-      res=. (2#LF) joinstring (70&foldtext)&.> res
-    end.
-  case. 'showinstalled' do.
-    dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
-    res=. (-.@pkgnew # ])dat
-    res=. curtailcaption res
-  case. 'shownotinstalled' do.
-    dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
-    res=. (pkgnew # 0 2 3&{"1@])dat
-    res=. curtailcaption res
-  case. 'showupgrade' do.
-    dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
-    res=. (pkgups # ])dat
-    res=. curtailcaption res
-  case. 'status' do.
-    res=. checklastupdate''
-    res=. res,LF,checkstatus''
+if. -. init_console 'read' do. '' return. end.
+select. x
+case. 'search' do.
+  pkgs=. getnames y
+  res=. (pkgsearch pkgs) # 1 2 3 4 {"1 PKGDATA
+  res=. curtailcaption res
+case. 'show' do.
+  pkgs=. getnames y
+  res=. (msk=. pkgshow pkgs) # 5 {"1 PKGDATA
+  if. #res do.
+    res=. ,((<'== '), &.> msk # 1 {"1 PKGDATA) ,. res
+    res=. (2#LF) joinstring (70&foldtext)&.> res
   end.
-  res
+case. 'showinstalled' do.
+  dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
+  res=. (-.@pkgnew # ])dat
+  res=. curtailcaption res
+case. 'shownotinstalled' do.
+  dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
+  res=. (pkgnew # 0 2 3&{"1@])dat
+  res=. curtailcaption res
+case. 'showupgrade' do.
+  dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
+  res=. (pkgups # ])dat
+  res=. curtailcaption res
+case. 'status' do.
+  res=. checklastupdate''
+  res=. res,LF,checkstatus''
+end.
+res
 )
 
 showfiles_console=: 4 : 0
-  if. -. init_console 'read' do. '' return. end.
-  pkgs=. getnames y
-  pkgs=. pkgs (e. # [) (-.@pkgnew # 1&{"1@]) PKGDATA
-  pkgs=. pkgs -. <BASELIB
-  if. 0=#pkgs do. '' return. end.
-  fn=. (<'~addons/') ,&.> (pkgs) ,&.> <'/',x,(x-:'history'){::'.ijs';'.txt'
-  res=. res #~ msk=. (<_1) ~: res=. fread@jpath &.> fn
-  if. #res do.
-    res=. ,((<'== '), &.> msk#pkgs) ,. res
-    res=. (2#LF) joinstring res
-  end.
+if. -. init_console 'read' do. '' return. end.
+pkgs=. getnames y
+pkgs=. pkgs (e. # [) (-.@pkgnew # 1&{"1@]) PKGDATA
+pkgs=. pkgs -. <BASELIB
+if. 0=#pkgs do. '' return. end.
+fn=. (<'~addons/') ,&.> (pkgs) ,&.> <'/',x,(x-:'history'){::'.ijs';'.txt'
+res=. res #~ msk=. (<_1) ~: res=. fread@jpath &.> fn
+if. #res do.
+  res=. ,((<'== '), &.> msk#pkgs) ,. res
+  res=. (2#LF) joinstring res
+end.
 )
 remove_console=: 3 : 0
-  if. -. init_console 'edit' do. '' return. end.
-  pkgs=. getnames y
-  pkgs=. pkgs (e. # [) (-.@pkgnew # 1&{"1@]) PKGDATA
-  pkgs=. pkgs -. <BASELIB
-  if. 0 = num=. #pkgs do. '' return. end.
-  many=. 1 < num
-  msg=. 'Removing ',(":num),' package',many#'s'
-  log msg
-  remove_addon each pkgs
-  log 'Done.'
-  readlocal''
-  pacman_init ''
-  checkstatus''
+if. -. init_console 'edit' do. '' return. end.
+pkgs=. getnames y
+pkgs=. pkgs (e. # [) (-.@pkgnew # 1&{"1@]) PKGDATA
+pkgs=. pkgs -. <BASELIB
+if. 0 = num=. #pkgs do. '' return. end.
+many=. 1 < num
+msg=. 'Removing ',(":num),' package',many#'s'
+log msg
+remove_addon each pkgs
+log 'Done.'
+readlocal''
+pacman_init ''
+checkstatus''
 )
 
 remove_addon=: 3 : 0
-  log 'Removing ',y,'...'
-  treepath=. jpath '~addons/',y
-  if. -.deltree treepath do.
-    nf=. #dirtree treepath
-    nd=. <: # dirpath treepath
-    nd=. nd + (tolower treepath) e. dirpath jpath '~addons/', '/' taketo y
-    msg=. (":nd),' directories and ',(":nf),' files not removed.'
-    log 'Remove failed: ',msg
-    info 'Remove failed:',LF2,msg
-    return.
-  end.
-  remove_addins y
-  remove_config y
+log 'Removing ',y,'...'
+treepath=. jpath '~addons/',y
+if. -.deltree treepath do.
+  nf=. #dirtree treepath
+  nd=. <: # dirpath treepath
+  nd=. nd + (tolower treepath) e. dirpath jpath '~addons/', '/' taketo y
+  msg=. (":nd),' directories and ',(":nf),' files not removed.'
+  log 'Remove failed: ',msg
+  info 'Remove failed:',LF2,msg
+  return.
+end.
+remove_addins y
+remove_config y
 )
 remove_addins=: 3 :0
-  fl=. ADDCFG,'addins.txt'
-  ins=. fixjal2 freads fl
-  ins=. ins #~ (<y) ~: {."1 ins
-  (fmtjal2 ins) fwrites fl
+fl=. ADDCFG,'addins.txt'
+ins=. fixjal2 freads fl
+ins=. ins #~ (<y) ~: {."1 ins
+(fmtjal2 ins) fwrites fl
 )
 remove_config=: 3 : 0
-  ADDLABS=: ''
-  0!:0 :: ] < ADDCFGIJS
-  remove_labs y
-  write_config''
+ADDLABS=: ''
+0!:0 :: ] < ADDCFGIJS
+remove_labs y
+write_config''
 )
 remove_labs=: 3 : 0
-  txt=. <;._2 ADDLABS
-  txt=. txt #~ (<jhostpath y) ~: (#y)&{. each txt
-  ADDLABS=: ; txt ,each LF
+txt=. <;._2 ADDLABS
+txt=. txt #~ (<jpathsep y) ~: (#y)&{. each txt
+ADDLABS=: ; txt ,each LF
 )
 LOG=: 1
 LOGMAX=: 100
@@ -789,7 +793,11 @@ end.
 )
 pmprefs_cancel_button=: pmprefs_close
 readlin=: 3 : 0
-LIN=: 6 1 1 >. fixver freads LIBVER
+if. 0: ~: 4!:0 @ < 'JLIB' do.
+  LIN=: 6 1 1 >. fixver freads LIBVER
+else.
+  LIN=: 6 1 1 >. fixver JLIB
+end.
 )
 readlocal=: 3 : 0
 readlin''
@@ -856,13 +864,13 @@ info msg
 0
 )
 updatejal=: 3 : 0
-  log 'Updating server catalog...'
-  if. -. init_console 'server' do. '' return. end.
-  refreshaddins''
-  readlocal''
-  pacman_init''
-  res=. checklastupdate''
-  res,LF,checkstatus''
+log 'Updating server catalog...'
+if. -. init_console 'server' do. '' return. end.
+refreshaddins''
+readlocal''
+pacman_init''
+res=. checklastupdate''
+res,LF,checkstatus''
 )
 RELIBMSG=: 0 : 0
 You are now using the XX base library, and can switch to the YY base library.
@@ -891,24 +899,24 @@ masklib=: 3 : 0
 (1 {"1 y) = <BASELIB
 )
 pkglater=: 3 : 0
-dat=. (s=.isjpkgout y){:: PKGDATA;<y
+dat=. (s=. isjpkgout y){:: PKGDATA;<y
 if. 0=#dat do. $0 return. end.
 loc=. fixvers > (2-s) {"1 dat
 srv=. fixvers > (3-s) {"1 dat
 {."1 /:"2 srv ,:"1 loc
 )
 pkgnew=: 3 : 0
-dat=. (s=.isjpkgout y){:: PKGDATA;<y
+dat=. (s=. isjpkgout y){:: PKGDATA;<y
 if. 0=#dat do. $0 return. end.
 0 = # &> (2-s) {"1 dat
 )
 pkgups=: pkgnew < pkglater
 
 pkgsearch=: 3 : 0
-  +./"1 +./ y E."1&>"(0 _) 1{"1 PKGDATA
++./"1 +./ y E."1&>"(0 _) 1{"1 PKGDATA
 )
 pkgshow=: 3 : 0
-  y e.~ 1{"1 PKGDATA
+y e.~ 1{"1 PKGDATA
 )
 setshowall=: 3 : 0
 PKGDATA=: (<y) (<(I.DATAMASK);0) } PKGDATA
@@ -1291,50 +1299,50 @@ if. isgui'' do. pmview_postinit'' end.
 EMPTY
 )
 init_console=: 3 : 0
-  if. 0=#y do. y=. 'read' end.
-  select. y
-  fcase. 'edit';'server' do.
-    if. -. checkaccess'' do. 0 return. end.
-  case. 'read' do.
-    readconfig''
-    if. -. checkaddonsdir'' do. 0 return. end.
-    setfiles''
-    readlocal''
-    pacman_init ''
-    res=. 1
-  case. do. res=. 0
-  end.
-  if. y -: 'server' do. res=. getserver''  end.
-  res
+if. 0=#y do. y=. 'read' end.
+select. y
+fcase. 'edit';'server' do.
+  if. -. checkaccess'' do. 0 return. end.
+case. 'read' do.
+  readconfig''
+  if. -. checkaddonsdir'' do. 0 return. end.
+  setfiles''
+  readlocal''
+  pacman_init ''
+  res=. 1
+case. do. res=. 0
+end.
+if. y -: 'server' do. res=. getserver'' end.
+res
 )
 
 jpkg=: 4 : 0
-  select. x
-  case. 'history';'manifest' do.
-    x showfiles_console y
-  case. 'install' do.
-    install_console y
-  case. 'remove' do.
-    remove_console y
-  case. ;:'show search showinstalled shownotinstalled showupgrade status' do.
-    x show_console y
-  case. 'update'  do.
-    updatejal ''
-  case. 'upgrade' do.
-    upgrade_console y
-  case. do.
-    msg=. 'Valid options are:',LF
-    msg=. msg,'  history, install, manifest, remove, show, search,',LF
-    msg=. msg,'  showinstalled, shownotinstalled, showupgrade, status,',LF
-    msg,'  update, upgrade'
-  end.
+select. x
+case. 'history';'manifest' do.
+  x showfiles_console y
+case. 'install' do.
+  install_console y
+case. 'remove' do.
+  remove_console y
+case. ;:'show search showinstalled shownotinstalled showupgrade status' do.
+  x show_console y
+case. 'update' do.
+  updatejal ''
+case. 'upgrade' do.
+  upgrade_console y
+case. do.
+  msg=. 'Valid options are:',LF
+  msg=. msg,'  history, install, manifest, remove, show, search,',LF
+  msg=. msg,'  showinstalled, shownotinstalled, showupgrade, status,',LF
+  msg,'  update, upgrade'
+end.
 )
 jpkg_z_=: 3 : 0
-  'help' jpkg y
-  :
-  a=. conew 'jpacman'
-  res=. x jpkg__a y
-  destroy__a''
-  res
+'help' jpkg y
+:
+a=. conew 'jpacman'
+res=. x jpkg__a y
+destroy__a''
+res
 )
 jpkgv_z_=: (<@:>"1@|:^:(0 ~: #))@jpkg

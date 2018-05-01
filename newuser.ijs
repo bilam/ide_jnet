@@ -12,9 +12,9 @@ cfgwrite (<new) ndx } dat
 0!:0 :: ] <jpath '~config/config.ijs'
 
 deb=: #~ (+. 1: |. (> </\))@(' '&~:)
-fexist=: 1!:4 :: 0:
-fread=: 1!:1 :: 0:
-fwrite=: 1!:2 :: 0:
+fexist=: (1:@(1!:4) :: 0:) @ (fboxname &>) @ boxopen
+fread=: (1!:1) @ (fboxname &>) @ boxopen :: _1:
+fwrite=: ([: , [) (#@[ [ 1!:2) ::(_1:) [: fboxname ]
 quote=: ''''&,@(,&'''')@(#~ >:@(=&''''))
 cfgopen=: 3 : 0
 CFG=: jpath '~config/config.ijs'
@@ -23,7 +23,7 @@ if. 0 -: fexist <CFG do.
   dat fwrite <CFG
 end.
 dat=. fread <CFG
-if. 0 -: dat do.
+if. _1 -: dat do.
   msg=. 'Unable to save configuration file: ',CFG
   wdinfo 'New User';msg
   '' return.
@@ -102,7 +102,8 @@ wd BUF
 wd 'pshow'
 )
 newuserdefs=: 3 : 0
-JVER=: 'J805'
+ver=. (i.&'/' {. ])9!:14''
+JVER=: 'J',(({.ver) e. 'jJ') }. ver
 if. IFUNIX do.
   FONT=: IFJAVA{::'"DejaVu Serif" 10';'SansSerif 10'
   FONT2=: IFJAVA{::'"DejaVu Serif" 14 bold';'SansSerif 14 bold'

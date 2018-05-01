@@ -14,7 +14,7 @@ coclass 'jndemo'
 
 NB. =========================================================
 SLdemo=: 0 : 0
-pc trackbardemo;
+pc8j trackbardemo;
 minwh 200 40;cc track trackbar 0 20 8;
 )
 

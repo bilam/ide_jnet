@@ -1,4 +1,4 @@
-require 'general/misc/font'
+require 'general/misc/font graphics/bmp'
 coclass 'jformedit'
 
 coinsert 'jgl2 jijs'
@@ -152,9 +152,17 @@ geteditheight=: 3 : 0
 EDITHEIGHT=: FORMSIZES {~ {: 4 pick (({."1 CONTROLS) i. <'edit') { CONTROLS
 )
 getoleocx=: 3 : 0
-if. 0 = # OLEOCX do.
-  j=. _2 [\ <;._2 wd 'oleocx'
-  OLEOCX=: j /: tolower each {."1 j
+if. y do.
+  if. 0 = # OLEOCX do.
+    j=. _2 [\ <;._2 wd 'oleocx ',IFJNET#":y
+    OLEOCX=: j /: tolower each {."1 j
+  end.
+else.
+  if. -.IFJNET do. return. end.
+  if. 0 = # OLEAUT do.
+    j=. _2 [\ <;._2 wd 'oleocx ',":y
+    OLEAUT=: j /: tolower each {."1 j
+  end.
 end.
 )
 getwhx=: 3 : 0
@@ -264,15 +272,16 @@ ndx=. I. CLS e. 'combodrop';'combolist'
 CBSIZE (<ndx;3) } CCS
 )
 ws_add=: 3 : 0
-dat=. ;: ^: (L.=0:) y
+dat=. <;._1@:(' ' , deb) ^: (L.=0:) y
 dat=. (<'ws_group') (I. dat = <'group') } dat
 dat=. (<'gs_opengl') (I. dat = <'opengl') } dat
 towords dat
 )
 ws_del=: 3 : 0
-dat=. ;: ^: (L.=0:) y
+dat=. <;._1@:(' ' , deb) ^: (L.=0:) y
 dat=. (<'group') (I. dat = <'ws_group') } dat
 dat=. (<'opengl') (I. dat = <'gs_opengl') } dat
+dat=. }.^:('_'={.) each dat
 )
 BLACK=: 0 0 0
 RED=: 255 0 0
@@ -310,6 +319,7 @@ SBR=: ''
 TBR=: ''
 TBFN=: jpath '~addons/ide/jnet/data/isitbar8.bmp'
 PC6J=: 0
+PC8J=: 0
 MOUSEIGNORE=: 0
 MOUSETIME=: sessiontime''
 
@@ -331,6 +341,7 @@ TESTHWNDP=: ''
 WINDIR=: 0
 GFONT=: PROFONT
 OLEOCX=: ''
+OLEAUT=: ''
 sysevent=: ''
 sysmodifiers=: ,'0'
 CAPNONE=: 0
@@ -340,7 +351,7 @@ CAPSELECT=: 3
 CAPTURE=: CAPNONE
 FWH=: _1
 mGSCALE=: 0
-GSCALE=: 3 : 'PC6J{1,mGSCALE'
+GSCALE=: 3 : '((-.PC8J*.IFJNET){0,(((,''1'')-:11!:0 ::0:''getj pc6j'')+.PC6J+.-.IFJNET)){1,mGSCALE'
 GRID=: 16
 FNAME=: ''
 PID=: ''
@@ -355,6 +366,7 @@ button
 bs
 group
 defpushbutton ownerdraw
+
 0 1
 1
 button
@@ -362,6 +374,7 @@ checkbox
 bs
 group
 lefttext
+left
 2 4
 1
 button
@@ -369,6 +382,7 @@ combobox
 cbs
 group vscroll
 autohscroll sort
+
 2 2
 0
 button select
@@ -376,6 +390,7 @@ combodrop
 cbs
 group vscroll
 autohscroll sort
+
 2 2
 0
 button select
@@ -383,6 +398,7 @@ combolist
 cbs
 group vscroll
 sort
+
 2 2
 0
 button select
@@ -390,6 +406,7 @@ edit
 es
 group thickframe
 autohscroll lowercase nohidesel password readonly right uppercase
+center left
 2 3
 0
 button
@@ -397,6 +414,7 @@ editm
 es
 group hscroll thickframe vscroll
 autohscroll autovscroll center lowercase nohidesel readonly right uppercase
+center left
 2 2
 0
 
@@ -404,6 +422,7 @@ groupbox
 -
 group
 -
+
 2 2
 1
 
@@ -411,6 +430,7 @@ isigraph
 gs
 -
 opengl
+
 2 2
 0
 char copy cut focus focuslost mbldbl mbldown mblup mblmdown mblmdbl mblmup mbrdbl mbrdown mbrup mmove mwheel paint paste undo
@@ -418,12 +438,14 @@ listbox
 lbs
 group hscroll vscroll
 extendedsel multicolumn multiplesel ownerdrawfixed sort
+
 2 2
 0
 button select
 progress
 -
 group
+
 -
 2 3
 0
@@ -432,6 +454,7 @@ radiobutton
 bs
 -
 lefttext
+left
 2 4
 1
 button
@@ -439,6 +462,7 @@ richedit
 es
 group thickframe
 autohscroll nohidesel readonly sunken
+center left
 2 3
 0
 button
@@ -446,6 +470,7 @@ richeditm
 es
 group hscroll thickframe vscroll
 autohscroll autovscroll center nohidesel readonly right sunken
+center left
 2 2
 0
 
@@ -453,6 +478,7 @@ scrollbar
 sbs
 group
 -
+
 2 3
 0
 button
@@ -460,6 +486,7 @@ scrollbarv
 sbs
 group
 -
+
 3 2
 0
 button
@@ -467,6 +494,7 @@ spin
 
 group
 -
+
 1 1
 0
 button
@@ -474,6 +502,7 @@ spinv
 
 group
 -
+
 1 1
 0
 button
@@ -481,6 +510,7 @@ static
 ss
 group
 center leftnowordwrap noprefix right simple
+
 2 4
 1
 
@@ -488,6 +518,7 @@ staticbox
 ss
 group
 blackframe blackrect etchedframe etchedhorz etchedvert grayframe grayrect sunken whiteframe whiterect
+
 2 2
 0
 
@@ -495,6 +526,7 @@ tab
 tcs
 group
 buttons multiline
+noheader
 2 2
 0
 button
@@ -502,6 +534,7 @@ trackbar
 tbs
 group
 autoticks both enableselrange nothumb noticks top
+
 2 3
 0
 button
@@ -509,25 +542,156 @@ trackbarv
 tbs
 group
 autoticks both enableselrange left nothumb noticks
+
 3 2
 0
 button
 ocx
 ocx
 group
+-
 
 2 2
 0
 button
+oleautomation
+-
+-
+-
+
+2 2
+0
+-
+checkedlistbox
+lbs
+group hscroll vscroll
+extendedsel multicolumn multiplesel ownerdrawfixed sort
+checkonclick multiple multiextended mutisimple
+2 2
+0
+button select
+datagrid
+-
+group
+-
+
+2 2
+0
+button select
+datepicker
+-
+group
+
+cal
+2 3
+0
+changed
+dspinbox
+
+group
+-
+
+2 3
+0
+changed
+editmask
+es
+group
+autohscroll lowercase nohidesel password readonly right uppercase
+center left
+2 3
+0
+button char
+editint
+es
+group
+autohscroll nohidesel password readonly right
+center left
+2 3
+0
+button char
+editnum
+es
+group
+autohscroll nohidesel password readonly right
+center left
+2 3
+0
+button char
+image
+-
+group
+
+autosize center normal stretch zoom
+2 2
+0
+
+isidraw
+-
+-
+-
+
+2 2
+0
+char copy cut focus focuslost mbldbl mbldown mblup mblmdown mblmdbl mblmup mbrdbl mbrdown mbrup mmove mwheel paint paste undo
+isiprint
+-
+-
+
+j6 j8
+2 2
+0
+print
+opengl
+-
+-
+
+es version
+2 2
+0
+char copy cut focus focuslost mbldbl mbldown mblup mblmdown mblmdbl mblmup mbrdbl mbrdown mbrup mmove mwheel paint paste undo
+progressbar
+-
+group
+-
+
+2 3
+0
+-
+spinbox
+
+group
+-
+
+2 3
+0
+changed
+timepicker
+-
+group
+-
+
+2 3
+0
+changed
+webview
+-
+group
+-
+
+2 2
+0
+-
 )
-j=. _7 [\ <;._2 j -. '-'
+j=. _8 [\ <;._2 j -. '-'
 s=. 'border disabled '
 std=. ([: 'ws_'&, each [: ;: s&,) each 2 {"1 j
 sty=. (1 {"1 j) ,each '_'
 cls=. (< each sty) ,each each ;: each 3 {"1 j
-siz=. 0 ". each 4 {"1 j
-cap=. 0 ". each 5 {"1 j
-evt=. ;: each 6 {"1 j
+cls=. /:~@:~. each cls ,&.> IFJNET {:: a: ,&< (< each sty) ,each each ;: each 4 {"1 j
+siz=. 0 ". each 5 {"1 j
+cap=. 0 ". each 6 {"1 j
+evt=. ;: each 7 {"1 j
 CONTROLS=: (2 {."1 j) ,. std ,. cls ,. siz ,. cap ,. evt
 JAVASTYLES=: cutopen 0 : 0
 bs_defpushbutton
@@ -584,6 +748,9 @@ ws_thickframe
 ws_vscroll
 )
 3 : 0''
+if. -.IFJNET do.
+  CONTROLS=: CONTROLS {.~ >: (<'oleautomation') i.~ {."1 CONTROLS
+end.
 std=. 2 {"1 CONTROLS
 cls=. 3 {"1 CONTROLS
 if. IFJAVA do.
@@ -591,7 +758,7 @@ if. IFJAVA do.
   cls=. cls (e. # [) each <JAVASTYLES
 end.
 CONTROLS=: (std ,. cls) 2 3 }"1 CONTROLS
-STDCONTROLS=: CONTROLS #~ (<'ocx') ~: {."1 CONTROLS
+STDCONTROLS=: CONTROLS #~ ('ocx';'oleautomation') (-.@e.)~ {."1 CONTROLS
 )
 bufsnap=: 3 : 0
 if. #BUF do.
@@ -776,7 +943,8 @@ ndx=. ({."1 CONTROLS) i. < class
 'sty cst cap evt'=. 2 3 5 6 { ndx { CONTROLS
 evt=. > {. evt
 ocx=. class-:'ocx'
-cap=. cap +. ocx
+oleautomation=. class-:'oleautomation'
+cap=. cap +. ocx +. oleautomation
 
 design_enable ''
 wd WCONTROL
@@ -788,7 +956,7 @@ wd 'set caption *',sel pick CPS
 wd 'setshow scaption ',":cap
 wd 'setshow caption ',":cap
 wd 'setenable code ',":0 < #evt
-wd 'setcaption scaption ',ocx pick 'Caption:';'ocx:'
+wd 'setcaption scaption ',(ocx+.oleautomation) pick 'Caption:';oleautomation pick 'ocx:';'oleautomation:'
 FMS=: (_2 [\ FMSTYLE e. styles) i."1 [ 1
 wcontrol_setmoves''
 
@@ -1265,6 +1433,7 @@ wd 'xywh 0 0 100 100;cc s static;setshow s 0'
 wd 'cc g isigraph nopas;'
 HWNDP=: wd 'qhwndp'
 HWNDG=: wd 'qhwndc g'
+if. IFJNET do. glnodblbuf_jgl2_ 0 end.
 wd 'pn "',((*#PCN) pick PID;PCN),'"'
 wd MNU
 wd SBR
@@ -1284,6 +1453,7 @@ end.
 )
 drawsize=: 3 : 0
 makeccx''
+wd 'psel ',HWNDP
 fwh=. MINWH >. PAS + >./ +/"2 [ _2 [\"1 CCX
 if. y *. fwh -: FWH do. return. end.
 FWH=: fwh
@@ -1869,6 +2039,22 @@ drawisigraph=: 'isigraph' & drawinput
 drawlistbox=: drawcombobox
 drawrichedit=: 'richedit' & drawinput
 drawricheditm=: 'richeditm' & drawinput
+drawcheckedlistbox=: drawcombobox
+drawdatagrid=: 'datagrid' & drawinput
+drawdatepicker=: 'datepicker' & drawinput
+drawdspinbox=: drawspin
+draweditint=: 'editint' & drawinput
+draweditmask=: 'editmask' & drawinput
+draweditnum=: 'editnum' & drawinput
+drawimage=: 'image' & drawinput
+drawisidraw=: 'isidraw' & drawinput
+drawisiprint=: 'isiprint' & drawinput
+drawoleautomation=: 'oleautomation' & drawinput
+drawopengl=: 'opengl' & drawinput
+drawprogressbar=: drawprogress
+drawspinbox=: drawspin
+drawtimepicker=: 'datepicker' & drawinput
+drawwebview=: 'webview' & drawinput
 file_init=: 3 : 0
 dat=. file_read FNAME
 if. dat -: _1 do.
@@ -1941,8 +2127,9 @@ child=. msk # dat
 parent=. (-. msk) # dat
 pdf=. 0 pick parent
 PC6J=: 'pc6j '-:5{.>0 pick pdf
-PST=: (1 + # (PC6J{::'pc ';'pc6j '),PID) }. 0 pick pdf
-PCN=: deldblquote (PC6J{3 5) }. 1 pick pdf, a:
+PC8J=: 'pc8j '-:5{.>0 pick pdf
+PST=: (1 + # (((PC6J,PC8J) i. 1){::'pc6j ';'pc8j ';'pc '),PID) }. 0 pick pdf
+PCN=: deldblquote ((PC6J+.PC8J){3 5) }. 1 pick pdf, a:
 pop=. ';' cutopen 1 pick parent, a:
 ndx=. I. (<'pas ') = 4 {. each pop
 if. #ndx do.
@@ -1990,13 +2177,19 @@ if. #cc do.
     CPS=: txt ndx } CPS
     CLS=: (<'ocx') ndx } CLS
   end.
+  ndx=. I. 'oleautomation:'&-: &> 14 {.each CLS
+  if. #ndx do.
+    txt=. 14 }.each ndx { CLS
+    CPS=: txt ndx } CPS
+    CLS=: (<'oleautomation') ndx } CLS
+  end.
 end.
 create_show ''
 )
 pairform=: 3 : 0
 dat=. <;.2 y
 msk1=. (<'pc ') = 3 {.each dat
-msk2=. (<'pc6j ') = 5 {.each dat
+msk2=. ('pc6j ';'pc8j ') e.~ 5 {.each dat
 msk=. 1 |. msk1+.msk2
 msk=. msk *. (1: e. '0 : 0'&E.) &> dat
 if. 0 = +/msk do.
@@ -2051,7 +2244,7 @@ end.
 )
 form_newcc_button=: newcc_run
 form_parent_button=: 3 : 0
-wd 'mb parent *set parent styles etc'
+wd 'mbmsg parent *set parent styles etc'
 )
 form_read=: 3 : 0
 r=. PDF,'=: 0 : 0',LF
@@ -2061,7 +2254,7 @@ r,LF,PFE,LF
 form_create=: 3 : 0
 view=. {. y, 0
 pst=. PST , view # ' closeok'
-r=. deb (PC6J{::'pc ';'pc6j '),PID,' ',pst
+r=. deb (((PC6J,PC8J) i. 1){::'pc6j ';'pc8j ';'pc '),PID,' ',pst
 r=. r,';',(*#PCN) # 'pn "',PCN,'";'
 r=. r,LF
 r=. r,MNU
@@ -2104,10 +2297,17 @@ for_i. i.#ids do.
     end.
   case. 'isigraph' do.
     c=. final pick 'editm';'isigraph'
+  case. 'isidraw' do.
+    c=. final pick 'editm';'isidraw'
+  case. 'isiprint' do.
+    c=. final pick 'editm';'isiprint'
   case. 'tab' do.
     c=. final pick 'groupbox';'tab'
   case. 'ocx' do.
     c=. final pick 'editm';'ocx:',n
+    n=. ''
+  case. 'oleautomation' do.
+    c=. final pick 'editm';'oleautomation:',n
     n=. ''
   end.
   grp=. c -: 'radiobutton'
@@ -2304,6 +2504,7 @@ wd 'setfocus g'
 form_g_mbldbl=: 3 : 0
 if. MOUSEIGNORE do. return. end.
 if. ORDER do. return. end.
+capture CAPNONE
 DOWN=: ''
 SELECT=: hittest mousepos''
 if. #SELECT do.
@@ -2475,6 +2676,7 @@ pc6j newcc nomax nomin nosize owner;pn "New Control";
 xywh 4 6 171 143;cc g0 groupbox;cn "Class";
 xywh 12 17 47 11;cc standard radiobutton;cn "Standard";
 xywh 60 17 33 11;cc ocx radiobutton group;cn "OCX";
+xywh 100 17 42 11;cc oleautomation radiobutton group;cn "OleAuto";
 xywh 9 30 160 112;cc class listbox ws_vscroll;
 xywh 180 13 31 11;cc s0 static;cn "Id:";
 xywh 212 12 56 12;cc id edit;
@@ -2489,8 +2691,9 @@ rem form end;
 )
 newcc_run=: 3 : 0
 wd NEWCC
-if. IFJAVA+.IFJNET do.
+if. IFJAVA+.-.IFWIN do.
   wd 'setenable ocx 0'
+  wd 'setenable oleautomation 0'
 end.
 selectnewcc=: wd bind ('psel ',wd 'qhwndp')
 newcc_standard_button ''
@@ -2502,14 +2705,16 @@ MOUSEIGNORE=: 1
 toDEL=: [: ; (DEL&, @ (,&DEL)) each
 newcc_standard_button=: 3 : 0
 OCX=: 0
+OLEAUTO=: 0
 wd 'set standard 1'
 wd 'set ocx 0'
+wd 'set oleautomation 0'
 wd 'set class ', toDEL {."1 STDCONTROLS
 wd 'setselect class 0'
 newcc_enable 0
 )
 newcc_enable=: 3 : 0
-if. -.OCX do.
+if. -.OCX+.OLEAUTO do.
   if. (<y;5) pick STDCONTROLS do.
     wd 'setshow scaption 1;setshow caption 1' return.
   end.
@@ -2522,12 +2727,25 @@ newcc_enable 0 ". class_select
 )
 newcc_ocx_button=: 3 : 0
 OCX=: 1
-getoleocx''
+OLEAUTO=: 0
+getoleocx 1
 wd 'set standard 0'
 wd 'set ocx 1'
+wd 'set oleautomation 0'
 wd 'set caption'
 wd 'setshow scaption 0;setshow caption 0'
 wd 'set class ', toDEL {."1 OLEOCX
+)
+newcc_oleautomation_button=: 3 : 0
+OCX=: 0
+OLEAUTO=: 1
+getoleocx 0
+wd 'set standard 0'
+wd 'set ocx 0'
+wd 'set oleautomation 1'
+wd 'set caption'
+wd 'setshow scaption 0;setshow caption 0'
+wd 'set class ', toDEL {."1 OLEAUT
 )
 newcc_apply_button=: 3 : 0
 if. 0 = #class do.
@@ -2554,6 +2772,9 @@ end.
 if. OCX do.
   caption=. (({."1 OLEOCX) i. <class) pick {:"1 OLEOCX
   class=. 'ocx'
+elseif. OLEAUTO do.
+  caption=. (({."1 OLEAUT) i. <class) pick {:"1 OLEAUT
+  class=. 'oleautomation'
 end.
 
 ndx=. ({."1 CONTROLS) i. <class
@@ -2614,11 +2835,15 @@ if. 0 = #formtype do.
   return.
 end.
 dat=. freads jpath '~addons/ide/jnet/data/forms/',formtype
-pc6j=. 1 e. (LF,'pc6j ') E. dat
-if. pc6j do.
+PC6J=. 1 e. (LF,'pc6j ') E. dat
+PC8J=. 1 e. (LF,'pc6j ') E. dat
+if. PC6J do.
   ndx=. 1 i.~ (LF,'pc6j ') E. dat
   j=. (ndx + 6) }. dat
-else.
+elseif. PC8J do.
+  ndx=. 1 i.~ (LF,'pc8j ') E. dat
+  j=. (ndx + 6) }. dat
+elseif. do.
   ndx=. 1 i.~ (LF,'pc ') E. dat
   j=. (ndx + 4) }. dat
 end.
@@ -2626,7 +2851,7 @@ formname=. deb (j i. ';') {. j
 if. formid -: toupper formid do.
   formid=. tolower formid
 end.
-dat=. dat rplc ((pc6j{::'pc ';'pc6j '),formname) ; (pc6j{::'pc ';'pc6j '),formid
+dat=. dat rplc ((((PC6J,PC8J) i. 1){::'pc6j ';'pc8j ';'pc '),formname) ; (((PC6J,PC8J) i. 1){::'pc6j ';'pc8j ';'pc '),formid
 dat=. dat rplc (toupper formname) ; toupper formid
 dat=. dat rplc (formname,'_') ; formid,'_'
 txt=. freads FNAME
@@ -2706,7 +2931,7 @@ pas 3 3;pcenter;
 rem form end;
 )
 wparent_run=: 3 : 0
-sty=. 'closeok dialog nomax nomenu nomin nosize owner'
+sty=. IFJNET{::'closeok dialog nomax nomenu nomin nosize owner';'closeok dialog escclose nomax nomenu nomin nosize owner'
 opt=. 'pcenter ptop'
 Wpmv=: PMV
 wd WPARENT
@@ -2896,6 +3121,12 @@ if. rerun do.
 end.
 wd WTBAR
 wd 'pn "Toolbar - ',PID,'"'
+if. IFJNET do.
+  glsel_jgl2_ 'tbbmp'
+  glnodblbuf_jgl2_ 0
+  glsel_jgl2_ 'tbids'
+  glnodblbuf_jgl2_ 0
+end.
 selecttoolbar=: wd bind ('psel ',wd 'qhwndp')
 wd 'setcaption sdef *Definition: id  index  tooltip  _  statushelp'
 wtbar_showdef''

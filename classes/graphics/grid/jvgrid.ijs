@@ -1,3 +1,5 @@
+require 'jzgrid'
+
 coclass 'jvgrid'
 coinsert 'jzgrid jgl2'
 DATANAME=: ''

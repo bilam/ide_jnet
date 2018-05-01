@@ -63,7 +63,7 @@ glqhandles=: 11!:2060
 glrect=: 11!:2031
 glrgb=: 11!:2032
 glroundr=: 11!:2033
-glsel=: (11!:2035)@":
+glsel=: 11!:2035
 gltext=: 11!:2038
 gltextcolor=: 11!:2040
 gltextxy=: 11!:2056
@@ -81,12 +81,9 @@ glsel2=: 11!:2344
 glwaitgl=: 11!:2345
 glwaitnative=: 11!:2346
 
-glreadimg=: 11!:3000
-glgetimg=: 11!:3001
-glwriteimg=: 11!:3002
-glputimg=: 11!:3003
-glclippastimg=: 11!:3004
-glclipcopyimg=: 11!:3005
+NB. reserved
+glflush=: 11!:2348
+glnodblbuf2=: 11!:2349
 
 NB. =========================================================
 NB. keyboard events
@@ -106,35 +103,3 @@ kbESC=: 27
 kbINS=: 28
 kbDEL=: 29
 
-NB. =========================================================
-NB. record played by glpaint or automatically after paint event
-
-stash_state=: 0 [ stash_buf=: 0$0
-
-NB. is now recording ?
-glqmark=: 3 : 0"1
-stash_state
-)
-
-NB. start recording
-glmark=: 3 : 0"1
-stash_state=: 1
-EMPTY
-)
-
-NB. discard buffer and stop recording and return buffer
-gltrash=: 3 : 0"1
-b [ stash_state=: 0 [ stash_buf=: 0$0 [ b=. stash_buf
-)
-
-NB. record gl2 cmds into buffer
-glbuf=: 4 : 0"0 1
-assert. 1=stash_state
-if. (*#y) *. 2 = 3!:0 y do. y=. a. i. y end.
-if. 2999 = x do.
-  stash_buf=: stash_buf, y
-else.
-  stash_buf=: stash_buf, (2+#y),x,<.y
-end.
-EMPTY
-)

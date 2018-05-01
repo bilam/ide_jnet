@@ -12,7 +12,7 @@ coclass 'jndemo'
 
 NB. =========================================================
 webview=: 3 : 0
-wd 'pc webview'
+wd 'pc8j webview'
 wd 'xywh 0 0 400 20'
 wd 'cc e edit'
 wd 'xywh 0 20 400 400'

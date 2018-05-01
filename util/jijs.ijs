@@ -34,7 +34,7 @@ if. 0 ~: 4!:0 <'IFJIJX_j_' do. IFJIJX_j_=: 0 end.
 
 1!:5 :: ] < jpath '~temp'
 3 : 0''
-qm=. 0 ". wd 'qm'
+qm=. (0: ". wd) ::(800 600 8 16 1 1 3 3 4 4 19 19 0 0 800 570"_) 'qm'
 if. (IFWIN+.IFJNET) > IFJAVA do.
   SMDESK=: 14 15 { qm
   SMBLK=: +/ <: 9 10 { qm
@@ -116,6 +116,11 @@ else.
   save 1
 end.
 1
+)
+clearijx=: 3 : 0
+fms=. wdforms''
+pid=. >1{{. fms #~ (<'jijx') = 3 {"1 fms
+wd 'psel ',pid, ';set',(IFJNET#'text'),' e'
 )
 getactsize=: 3 : 0
 wd 'psel ',qsmact''
@@ -219,7 +224,7 @@ readid16=: ucp @ readid
 readonlydefault=: 3 : 0
 if. IFWINCE +. READONLY=2 do. 0 return. end.
 if. READONLY=0 do. 1 return. end.
-y=. jpathsep@filecase jhostpath y
+y=. jpathsep@filecase jpathsep y
 ins=. filecase jpath '~install/'
 if. -. ins -: (#ins) {. y do. 0 return. end.
 tmp=. filecase jpath '~temp/'
@@ -360,9 +365,9 @@ IFIJX=: '.ijx' -: _4 {. SMNAME
 if. IFIJX do.
   ndx=. 6 + ('editijs' E. JIJS) i.1
   bf=. 'x' ndx } JIJS
-  nolint =. 1
+  nolint=. 1
 else.
-  nolint =. 3 ~: 4!:0 <'lint_lint_'
+  nolint=. 3 ~: 4!:0 <'lint_lint_'
   bf=. JIJS
 end.
 
@@ -376,7 +381,7 @@ if. -. IFWINCE do.
 end.
 
 if. nolint do.
-  bf =. ('menu runlint' i.&1@:E. bf) ({. , (}.~  LF&(i.&1@:E.))@}.) bf
+  bf=. ('menu runlint' i.&1@:E. bf) ({. , (}.~ LF&(i.&1@:E.))@}.) bf
 end.
 
 if. IFIJX do.
@@ -440,7 +445,7 @@ wd :: ] 'psel ',SMHWNDP,';pclose'
 codestroy''
 )
 aboutj=: 3 : 0
-r=. 'J805'
+r=. 'J',}.(i.&'/'{.])9!:14''
 r=. r,' - Copyright 1994-2016 Jsoftware Inc., www.jsoftware.com.'
 r=. r,LF,LF,JVERSION
 r=. r,LF,LF,'This computer program is protected by copyright law and international treaties.'
@@ -481,6 +486,8 @@ flwrite=: 4 : '(toHOST x) 1!:2 <y'
 flopen=: 3 : 0
 0 flopen y
 :
+if. 1e8< sz=. 1!:4 boxopen y do. wdinfo 'file size too large' return. end.
+if. +./(1!:11 (>y);0,1e5<.sz) e.~ (32{.a.)-.TAB,LF,CR,FF do. wdinfo 'binary file' return. end.
 smopen > y
 smscroll x
 smfocus ''
@@ -673,10 +680,10 @@ end.
 )
 getfile=: 3 : 0
 path=. jpath '~home'
-t=. mbopen '"Select File" "',path,'" "" '
+t=. '"Select File" "',path,'" "" '
 t=. t,'"Scripts (*.ijs)|*.ijs|All Files (*.*)|*.*"'
 t=. t,' ofn_filemustexist ofn_pathmustexist;'
-wd t
+mbopen t
 )
 getline=: 3 : 0
 smselact''
@@ -753,7 +760,7 @@ txt=. 1!:1 :: 0: <svn
 if. txt -: 0 do.
   wdinfo 'Unable to read: ',svn
 else.
-  require 'ide/jnet/util/jview'
+  require 'jview'
   wdview fcompare svn;nam
 end.
 )
@@ -796,7 +803,7 @@ if. #lb do.
 end.
 )
 jrecent_view_button=: 3 : 0
-require 'ide/jnet/util/jview'
+require 'jview'
 if. #lb do.
   lb=. jpath lb
   if. 0 = ifshiftkey'' do. jrecent_close'' end.
@@ -1427,6 +1434,8 @@ menu editfif "Find &in Files..." "Ctrl+Shift+F" "" "";
 menusep ;
 menu editdirmatch "Directory &Match..." "" "" "";
 menusep ;
+menu editclearterm "Clear Terminal" "Ctrl+Shift+T" "" "";
+menusep ;
 menu editinputlog "Input &Log..." "Ctrl+D" "" "";
 menusep ;
 menu editlint "Format Script" "Ctrl+L" "" "";
@@ -1434,6 +1443,8 @@ menusep ;
 menu editformedit "Form &Editor..." "" "" "";
 menusep ;
 menu editconfigure "Confi&gure..." "" "" "";
+menu editbasecfg "base.cfg" "" "" "";
+menu editfolderscfg "folders.cfg" "" "" "";
 menupopz;
 menupop "&Run";
 menu runline "&Line" "Ctrl+R" "" "";
@@ -1446,6 +1457,8 @@ menu runfile "&File" "" "" "";
 menu runfiled "File Di&splay" "" "" "";
 menusep ;
 menu runprojman "&Project Manager..." "Ctrl+B" "" "";
+menusep ;
+menu runprojman6 "J6 Project Manager..." "" "" "";
 menusep ;
 menu runpacman "&Package Manager..." "" "" "";
 menusep ;
@@ -1554,6 +1567,8 @@ menu editfif "Find &in Files..." "Ctrl+Shift+F" "" "";
 menusep ;
 menu editdirmatch "Directory &Match..." "" "" "";
 menusep ;
+menu editclearterm "Clear Terminal" "Ctrl+Shift+T" "" "";
+menusep ;
 menu editinputlog "Input &Log..." "Ctrl+D" "" "";
 menusep ;
 menu editlint "Format Script" "Ctrl+L" "" "";
@@ -1561,6 +1576,8 @@ menusep ;
 menu editformedit "Form &Editor..." "" "" "";
 menusep ;
 menu editconfigure "Confi&gure..." "" "" "";
+menu editbasecfg "base.cfg" "" "" "";
+menu editfolderscfg "folders.cfg" "" "" "";
 menupopz;
 menupop "&Run";
 menu runline "&Line" "Ctrl+R" "" "";
@@ -1573,6 +1590,8 @@ menu runfile "&File" "" "" "";
 menu runfiled "File Di&splay" "" "" "";
 menusep ;
 menu runprojman "&Project Manager..." "Ctrl+B" "" "";
+menusep ;
+menu runprojman6 "J6 Project Manager..." "" "" "";
 menusep ;
 menu runpacman "&Package Manager..." "" "" "";
 menusep ;
@@ -1655,6 +1674,7 @@ jijs_editdirmatch_button=: dirmatch
 jijs_editfif_button=: fif
 jijs_editfind_button=: editfind
 jijs_editformedit_button=: formedit
+jijs_editclearterm_button=: clearijx
 jijs_editinputlog_button=: editinputlog
 jijs_editlint_button=: lint
 jijs_editpaste_button=: 3 : 'wd ''setedit e v'''
@@ -1662,6 +1682,8 @@ jijs_editreadonly_button=: togglereadonly
 jijs_editredo_button=: 3 : 'wd ''setedit e y'''
 jijs_editselectall_button=: 3 : 'wd ''setselect e'''
 jijs_editundo_button=: 3 : 'wd ''setedit e z'''
+jijs_editbasecfg_button=: open_j_@jpath bind '~config/base.cfg'
+jijs_editfolderscfg_button=: open_j_@jpath bind '~config/folders.cfg'
 jijs_filecleartemp_button=: cleartemp
 jijs_fileexit_button=: closeijx
 jijs_filenewijs_button=: newijs
@@ -1700,6 +1722,7 @@ jijs_runfiled_button=: runfile bind 1
 jijs_runline_button=: runline
 jijs_runpacman_button=: pacman
 jijs_runprojman_button=: projectmanager
+jijs_runprojman6_button=: projectmanager6
 jijs_runselection_button=: runselection
 jijs_runwindow_button=: runwindow bind 0
 jijs_runwindowd_button=: runwindow bind 1
@@ -1720,7 +1743,7 @@ jijs_tileacross_button=: tileacross
 jijs_tilecascade_button=: tilecascade
 jijs_togglebox_button=: togglebox
 jijs_helpmigration_button=: 3 : 0
-require 'ide/jnet/util/jview'
+require 'jview'
 'Migration Note' wdview fread '~addons/ide/jnet/data/migration.txt'
 )
 jijs_f1_fkey=: jijs_helpvocab_button

@@ -16,7 +16,7 @@ y, ((0 < #y) > ('.ijl';'.ijs') e.~ < _4 {. y) # '.ijs'
 extnone=: 3 : 0
 (- 4 * (<_4 {. y) e. '.ijp';'.ijs') }. y
 )
-fexist=: 1:@(1!:4)@boxopen :: 0:
+fexist=: (1:@(1!:4) :: 0:) @ (fboxname &>) @ boxopen
 fexists=: #~ fexist&>
 find=: #@[ (| - =) i.
 find0=: {."1 @ [ bcfind ]
@@ -448,7 +448,6 @@ j=. j, f (0 : 0)
 
 FIFINSERT=: {."1 each j
 FIFINSTXT=: {:"1 each j
-t=: wpinsert_run
 ffssinit=: 3 : 0
 if. (FIFCONTEXTNDX=0) > RX do. 1 return. end.
 

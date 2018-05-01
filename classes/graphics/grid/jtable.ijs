@@ -7,7 +7,7 @@ NB. =========================================================
 TABLE=: 0 : 0
 pc table;pn "Table";
 cc xp checkbox;cn "extended precision";
-minwh 750 500;cc grid isidraw flush;
+minwh 750 500;cc grid isigraph flush;
 pas 0 0;pcenter;
 rem form end;
 )

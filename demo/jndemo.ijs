@@ -6,7 +6,7 @@ coclass 'jndemo'
 showevents_jnet_=: 0:
 sububar=: I. @(e.&'_')@]}
 maketitle=: ' '&sububar each @ cutopen ;._2
-fexist=: 1:@(1!:4)@boxopen ::0:
+fexist=: (1:@(1!:4) :: 0:) @ (fboxname &>) @ boxopen
 
 rundemo=: 1 : 0
 load bind ('~addons/ide/jnet/demo/','.ijs',~m)
@@ -21,17 +21,21 @@ coins dcoins
 controls dcontrols
 datetime ddatetime
 edit dedit
+emf demf
 events devents
 excel dexcel
 form dform
 gl2 dgl2
+gl2_nodblbuf dgl2nodblbuf
 grid dgrid
 image dimage
 isigraph... disigraph
 life dlife
+life2 dlife2
 mbox dmbox
 mbdialog dmbdialog
 menu dmenu
+minesweeper dminesweeper
 msgs dmsgs
 pen_styles dpenstyles
 plot dplot
@@ -48,6 +52,7 @@ unicode_simple dunisimple
 viewmat dviewmat
 wdplot dwdplot
 webd3 dwebd3
+webgl dwebgl
 webview dwebview
 )
 
@@ -97,16 +102,20 @@ dcoins=: 'coins' rundemo
 dcontrols=: 'controls' rundemo
 ddatetime=: 'datetime' rundemo`notsupport@.(-.IFJNET)
 dedit=: 'edit' rundemo`notsupport@.(-.IFJNET)
+demf=: 'emf' rundemo`notsupport@.(-.IFWIN)
 devents=: 'events' rundemo
 dexcel=: 'excel' rundemo`notsupport@.(-.IFWIN)
 dform=: 'form' rundemo
 dgl2=: 'gl2' rundemo
+dgl2nodblbuf=: 'gl2nodblbuf' rundemo
 dgrid=: 'grid' rundemo
 dimage=: 'image' rundemo`notsupport@.(-.IFJNET)
 dlife=: 'life' rundemo
+dlife2=: 'life2' rundemo
 dmbox=: 'mbox' rundemo`notsupport@.(-.IFJNET)
 dmbdialog=: 'mbdialog' rundemo`notsupport@.(-.IFJNET)
 dmenu=: 'menu' rundemo
+dminesweeper=: load bind (jpath '~addons/games/minesweeper/uiwd.ijs')
 dmsgs=: 'msgs' rundemo
 dpenstyles=: 'penstyles' rundemo
 dplot=: 'plot' rundemo
@@ -121,8 +130,9 @@ dtimer=: 'timer' rundemo
 dtrackbar=: 'trackbar' rundemo`notsupport@.(-.IFJNET)
 dunisimple=: 'unisimple' rundemo
 dviewmat=: 'viewmat' rundemo
-dwebd3=: 'webd3' rundemo`notsupport@.(-.IFJNET)
-dwebview=: 'webview' rundemo`notsupport@.(-.IFJNET)
+dwebd3=: 'webd3' rundemo`notsupport@.(-.IFJNET*.IFWIN)
+dwebgl=: 'webgl' rundemo`notsupport@.(-.IFJNET*.IFWIN)
+dwebview=: 'webview' rundemo`notsupport@.(-.IFJNET*.IFWIN)
 
 NB. =========================================================
 disigraph=: load bind ('~addons/demos/isigraph/isdemo.ijs')
@@ -140,7 +150,7 @@ NB. =========================================================
 jndemo_addons_button=: 3 : 0
 require 'pacman'
 'update' jpkg ''
-'install' jpkg 'graphics/bmp graphics/gl2 graphics/plot graphics/viewmat demos/isigraph demos/wdplot'
+'install' jpkg 'games/minesweeper graphics/bmp graphics/gl2 graphics/plot graphics/viewmat demos/isigraph demos/wdplot'
 smoutput 'All JNet demo addons installed.'
 )
 

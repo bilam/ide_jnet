@@ -19,7 +19,7 @@ NB. TRANS is a list of length 512=2^9, that gives the new life state for each ol
 
 require 'gl2'
 
-coclass 'jlife'
+coclass 'jlife2'
 
 
 coinsert 'jgl2'
@@ -815,6 +815,17 @@ whilst. RUN | COUNT do.
 end.
 )
 draw=: 3 : 0
+if. _1=4!:0<'STATE' do. return. end.
+wd 'psel ',HWNDP
+glsel 'g'
+wd 'set cnt ',":COUNT
+wd 'setenable stepback ',":HASBUF
+if. COUNT >: MAXITER do.
+  settimer 0 return.
+end.
+(wd bind 'setinvalid g')`glpaint@.IFJNET ''  NB. j602 bug? glpaint not worked for nodblbuf
+)
+drawit=: 3 : 0
 wd 'psel ',HWNDP
 glsel 'g'
 glclear''
@@ -829,12 +840,10 @@ if. SCALE > 1 do.
 else.
   glpixel 2 {."1 STATE#RECTS
 end.
-glpaint ''
-wd 'set cnt ',":COUNT
-wd 'setenable stepback ',":HASBUF
-if. COUNT >: MAXITER do.
-  settimer 0 return.
-end.
+)
+3 : 0''
+life_g_paint=: 3 : 'if. 0=RUN|COUNT do. draw'''' end.'
+EMPTY
 )
 step=: 3 : 0
 STATE=: TRANS {~ #. INDEX { STATE
@@ -1098,7 +1107,7 @@ rem form end;
 )
 life_run=: 3 : 0
 wd LIFE
-if. IFJNET do. glnodblbuf 0 end.  NB. test isigraph with bitmap backup
+glnodblbuf 1  NB. test isigraph without bitmap backup
 if. HWNDP e. 1 {"1 wdforms'' do. return. end.
 HWNDP=: wd 'qhwndp'
 FORMX=: 0 ". wd 'qformx'
@@ -1152,6 +1161,7 @@ RUN=: 1
 life''
 RUN=: MINRUN
 )
+life_g_paint=: drawit
 life_stepback_button=: 3 : 0
 settimer 0
 if. HASBUF do.
@@ -1202,7 +1212,7 @@ sys_timer_z_=: ('life_',loc,'_')~
 life_run''
 )
 runlife_z_=: 3 : 0
-a=. conew 'jlife'
+a=. conew 'jlife2'
 run__a y
 )
 

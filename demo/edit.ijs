@@ -6,7 +6,7 @@ coclass 'jndemo'
 NB. =========================================================
 edit=: 3 : 0
 wd 'fontdef Monospaced 12'
-wd 'pc edit'
+wd 'pc8j edit'
 wd 'xywh 10 10 200 21;cc e0 edit'
 wd 'xywh 220 10 200 21;cc e4 edit password'
 wd 'xywh 440 10 200 21;cc e5 edit readonly'

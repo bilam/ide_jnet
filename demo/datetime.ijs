@@ -59,8 +59,8 @@ coclass 'jndemo'
 
 NB. =========================================================
 DTdemo=: 0 : 0
-pc datetimedemo;
-xywh 10 10 200 21;cc date datepicker c;
+pc8j datetimedemo;
+xywh 10 10 200 21;cc date datepicker cal;
 xywh 210 10 200 21;cc time timepicker;
 )
 

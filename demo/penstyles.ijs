@@ -31,7 +31,7 @@ glfill^:IFJNET 255 255 255 255
 glrgb 0 0 255
 for_i. i.#PenStyles do.
   y=. 30+40*i
-  glpen 3,i
+  glpen (IFJNET{1,3),i   NB. J602 all solid if width > 1
   gllines 25,y,200,y
   gltextxy 230,y-off
   gltext (":i),' ',i pick PenStyles

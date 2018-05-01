@@ -2,18 +2,16 @@ coclass 'demosphere'
 
 count=: 0
 A=: 0 : 0
-pc a;
+pc8j a;
 xywh 0 0 40 20;cc b button;
-xywh 0 20 300 300;cc g opengl;
+xywh 0 20 300 300;cc g opengl rightmove bottommove;
 rem form end;
 )
 
 a_run=: 3 : 0
 if. -. checkrequire_jndemo_ 'gl2';'graphics/gl2' do. return. end.
-require 'gl2'
-coinsert 'jgl2'
-load 'ide/jnet/gl3'
-coinsert 'jgl3'
+require 'gl2 gl3'
+coinsert 'jgl2 jgl3'
 wd A
 HD=: wd'qhwndc g'
 SPHERE=: 2
@@ -27,9 +25,9 @@ glMatrixMode GL_PROJECTION
 glLoadIdentity''
 gluPerspective 30, (%/wh),1 10
 if. 0=2|count do.
-glClearColor 0 0 0 0
+  glClearColor 0 0 0 0
 else.
-glClearColor 0 1 0 0
+  glClearColor 0 1 0 0
 end.
 count=: count+1
 glClear GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT

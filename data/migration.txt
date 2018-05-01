@@ -1,11 +1,12 @@
 Migration Notes
 
-JNet implements most of J602 wd commands with
+JNet implements most of J6 wd commands with
 differences as summarized below.
 
 == JNET
-   noun JNET_z_ set to 1 by jnet.exe
-   wd'qwd' reports 'jwin32' on both Windows and Linux
+   noun IFJNET_z_ set to 1 by jnet.exe
+   wd'qwd'  returns 'jwin32' on both Windows and Linux
+   wd'qwd2' returns 'jnet'
 
 == jnet.exe
    3 versions: anycpu, x64 and x86.
@@ -20,59 +21,72 @@ differences as summarized below.
    unregister: jnet.exe /unregserver
 
 == opengl
-   implemented as opengl child control class
-   support both legacy and modern opengl
+   new opengl control that supports both legacy and modern opengl
 
 == project manager
-   J602 ijp decommitted. use J805 jproj project folder.
+   both J6 and J8 project managers supported
+   J8 project manager is the default and recommanded
 
 == new child classes
-   checkedlistbox datepicker dspinbox editmask editint
-   editnum image isidraw isiprint opengl progressbar
-   spinbox timepicker webview
+   checkedlistbox datepicker dspinbox editint editmask
+   editnum image isidraw isiprint opengl progressbar spinbox
+   timepicker webview
 
 == new wd commands
-   end get getj getp ide immexj NB. 
-   qfontdef qosver qform
+   end get getj getp ide immexj NB.
+   qfontdef qform qosver qwd2
    setc setj setp verbose version xy wh maxwh minwh
    bin and other related commands are accepted but ignored
 
+   for creategroup id
+   setselect id n  to switch and show tabpage if id is a tab
+
+   readimg      11!:3000  (jnet locale)
+   getimg       11!:3001
+   writeimg     11!:3002
+   putimg       11!:3003
+   clippasteimg 11!:3004
+   clipcopyimg  11!:3005
+
 == un-implemented wd commands
-   qkeystate sbarshow security setcolwidth setpclip tbarshow
-   tnomsgs wait
-   all ole commands except: oleget oleid olemethod oleset
-   ocx not supported
+   setpclip wait
+   oledlg oleload olemethodx olerelease olesave
 
 == incompatible changes
 
-=== combobox and listbox
-   event data ..._select is '_1' instead of '' if no items selected
-
-=== creategroup
-   creategroup id
-   only on tab control. groupbox and static not supported
-   setselect id n   to switch and show tabpage
-
-=== pc and pc6j
+=== pc6j and pc8j
    both of them create new parent forms
-   pc   J805 compatible
+   pc8j J8 compatible
      dialog unit = pixel
      set id property ...
-   pc6j J602 compatible
+   pc6j J6 compatible
      dialog unit = 2 x pixel
      set id ...   (default property)
-   
+   pc interpreted as pc6j or pc8j depending on legacy option (see below)
+
    setc id property ...  (works in both pc and pc6j)
 
+=== isigraph
+   isigraph default to no double buffering, use glnodblbuf to change
+   glclear does not paint white background, use glfill to change
+   glpixels and glqpixels data with alpha channel
+   legacy oldisigraph option to change restore old behavior
+
 === gl2 printing
-   printer mapping mode in 1/100 inch  (twip in J602)
-   print mode pagelength,pagewidth in 1/100 inch  (0.1mm in J602)
+   use isiprint instead of isigraph
+   default or with j8 style:
+     printer graphic unit in 1/100 inch
+     devmode w,h in 1/100 inch
+   legacy twip mode or with j6 style:
+     printer graphic unit in twip
+     devmode w,h in 0.1 mm
 
 === mb commands
    the syntax for messages is:
      wd 'mb type [defbutton] buttons title message'
 
    type specifies the icon and default behaviour:
+    msg title text [style...]
     about
     info      (default OK button)
     warn      (default OK button)
@@ -98,11 +112,35 @@ differences as summarized below.
      mb open1 title directory [filters]       (return 1 file)
      mb open needs title directory [filters]  (return list of files)
      mb save title directory [filters]
-     mb save6 title directory filename [filters] (filename ignored)
-     mb open6 title directory filename [filters] (filename ignored)
-     mb font title font size
+     mb font [title] font size
      mb color [R G B]
-     mb print
+     mb printer [pd_pagesetup]   NB. pd_printsetup ignored
+        Unlike J6's win32 pd_printsetup, the pd_pagesetup only displays
+        a page setup dialog, no printer selection can be done.
+
+   emulate J6
+     mb open6 title directory filename [filters] [style...] (style ignored)
+     mb save6 title directory filename [filters] [style...] (style ignored)
+
+   the "mb_" and "mb_icon" prefix are optional
+
+
+=== legacy options
+   options for better J6 compatibility however they are J8 INCOMPATIBLE
+   all options are initially set to false
+
+     wd 'setj pc6j [bool]'
+     if enabled, 'pc ...' interpreted as 'pc6j ...'
+
+     wd 'setj twip [bool]'
+     set printer graphic unit to twip and devmode in 0.1 mm
+
+     wd 'setj mb [bool]'
+     mbopen,mbsave,mb interpreted as mbopen6,mbsave6,mbmsg
+
+     wd 'setj oldisigraph [bool]'
+     new isigraph default double buffering, white background
+     glpixels and glqpixels ignore alpha channel for them
 
 == syntax coloring
    no effect on Linux except text and background color
@@ -155,6 +193,6 @@ differences as summarized below.
     47-59   keywords
 
 == Others
-   multimedia, video not implemented
+   qkeystate command expects integer keycode value argument
    webview depends on IE and does not work on Linux
 

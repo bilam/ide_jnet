@@ -745,7 +745,7 @@ if. GRIDFORMEVENTS do.
 else.
   locV=: coname''
   if. ('jwin32';'jjava') e.~ < (11!:0) :: 0: 'qwd' do.
-    glsel GRIDHWNDC
+    glsel ":GRIDHWNDC
     wd 'setlocale ',GRIDID,' ',>locV
     f=. (<pid,'_',GRIDID,'_') ,each EVENTS
     t=. ;f ,each (<'=: ') ,each EVENTS ,each LF
@@ -1042,7 +1042,7 @@ Twh=: 1 + (Ts - Tx),Tt - Ty
 )
 showit=: 3 : 0
 showitn y
-glpaint''
+glpaint`glpaintx@.IFJNET ''
 )
 showitn=: 3 : 0
 select. Show >. {. y,0
@@ -1095,7 +1095,7 @@ Hc=: Hr=: Hx=: Hy=: Hw=: Hh=: 0
 VSxywh=: HSxywh=: Gxywh=: 0 0 0 0
 Vcx=: Vcy=: 0
 drawinit''
-glpaint''
+glpaint`glpaintx@.IFJNET ''
 )
 refresh=: showit bind 5
 initsizes=: 3 : 0
@@ -1765,7 +1765,7 @@ if. Brws < Blen do.
   bcshowscroll''
 end.
 
-glpaint''
+glpaint`glpaintx@.IFJNET ''
 )
 coclass 'jzgrid'
 initdatax=: 3 : 0
@@ -1866,8 +1866,8 @@ end.
 if. -. 0 -: CellType do.
   msk=. iscombo CellType
   if. 1 (e.,) msk do.
-      min=. msk * (msk * 100|CellType) { CellHit + CellFont { CellItemsHex
-      wid=. wid >. min
+    min=. msk * (msk * 100|CellType) { CellHit + CellFont { CellItemsHex
+    wid=. wid >. min
   end.
 end.
 CellHex=: wid
@@ -2501,6 +2501,7 @@ end.
 )
 drawinit=: 3 : 0
 glsel ":GRIDHWNDC
+glnodblbuf 0
 glclear''
 glcursor IDC_ARROW
 HvRects=: i.0 4
@@ -2810,7 +2811,7 @@ HvRects=: HvRects,4{.y
 clearhover=: 3 : 0
 if. #HvRect do.
   glpixels HvOff
-  glpaint''
+  glpaint`glpaintx@.IFJNET ''
   HvRect=: ''
 end.
 )
@@ -2822,7 +2823,7 @@ if. #HvRect do.
   else.
     glpixels HvOff
   end.
-  glpaint''
+  glpaint`glpaintx@.IFJNET ''
 end.
 )
 sethover=: 3 : 0
@@ -2831,7 +2832,7 @@ clearhover''
 HvRect=: y
 HvOff=: y, glqpixels y
 glpixels (HvRects i. y) pick HvOns
-glpaint''
+glpaint`glpaintx@.IFJNET ''
 )
 subhover=: 3 : 0
 if. y -: HvRect do.
@@ -3660,7 +3661,7 @@ if. sel do.
 end.
 wid=. Emx + qextentw16 pos {. txt
 glcaret (Ex+wid),(Ey+My2),1,Eh-4*My
-glpaint''
+glpaint`glpaintx@.IFJNET ''
 
 if. y do. editsnap'' end.
 1
@@ -4022,16 +4023,16 @@ show__grid defs, ' GRIDPID GRIDID GRIDHWNDC'
 twh=. MinGrid >. readsize__grid wh
 del=. 0 <. twh - wh
 if. ('jwin32';'jjava') e.~ < (11!:0) :: 0: 'qwd' do.
-wd 'setxywh grid ',":xy, wh + del
+  wd 'setxywh grid ',":xy, wh + del
 else.
-wd 'set grid wh ',":wh + del
+  wd 'set grid wh ',":wh + del
 end.
 wd 'pmove ',":formx + 0 0,0 <. del+1
 EMPTY
 )
 GRIDP=: 0 : 0
 pc gridp;pn "Grid";
-minwh 800 600;cc grid isidraw flush;
+minwh 800 600;cc grid isigraph flush;
 pas 0 0;pcenter;
 rem form end;
 )
@@ -4433,7 +4434,7 @@ else.
 end.
 if. os = Scrollc do.
   drawscrollbutton''
-  glpaint''
+  glpaint`glpaintx@.IFJNET ''
 else.
   ShowMark=: 0
   showit''
@@ -4493,7 +4494,7 @@ else.
 end.
 if. os = Scrollr do.
   drawscrollbutton''
-  glpaint''
+  glpaint`glpaintx@.IFJNET ''
 else.
   ShowMark=: 0
   showit''

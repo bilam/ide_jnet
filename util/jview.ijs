@@ -163,6 +163,7 @@ TEXT=: jview_gettext''
 jview_close 1
 )
 jview_Print_button=: 3 : 0
+require 'print'
 txt=. jview_gettext''
 try. '' VIEWPRINT~ txt
 catch. wdinfo 'Print';'Print failed.',LF,LF,'Check the printer is installed'

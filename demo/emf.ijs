@@ -3,13 +3,13 @@ NB. eric's gl2 demo
 coclass 'jndemo'
 
 NB. =========================================================
-gl2_run=: 3 : 0
+emf_run=: 3 : 0
 if. -. checkrequire 'gl2';'graphics/gl2' do. return. end.
 require 'gl2'
 coinsert 'jgl2'
 data=: ''
 wd FORM
-glnodblbuf 0
+wd 'setshow g0 0'
 wd 'pshow'
 NB. should not be needed on other platforms..
 EMPTY
@@ -17,15 +17,18 @@ EMPTY
 
 NB. =========================================================
 FORM=: 0 : 0
-pc6j demo closeok;pn "gl2 demo";
+pc6j demoemf closeok;pn "emf demo";
+xywh 0 0 0 0; cc g0 isigraph;
 xywh 0 0 300 200;cc gs isigraph rightmove bottommove;
 )
 
 NB. =========================================================
-demo_gs_paint=: 3 : 0
-'w h'=: glqwh''
+emf_ppaint=: 3 : 0
+'w h'=: _2{. ". wd 'qchildxywhx gs'
+echo w,h
+glfile jpath '~temp/gl2.emf'
+glemfopen''
 NB. draw grid
-echo glqwh''
 glfill^:IFJNET 255 255 255 255
 glrgb 128 128 18
 glpen 0 1
@@ -86,14 +89,21 @@ glellipse 200 200 200 100
 
 data=: glqpixels 200 200 40 40
 smoutput 10{.data
-
-NB. qpixels pixels
-if. 0 _1 e.~ {.data do.
-  immexj^:IFJNET 'glpaint_jgl2_$0'
-else.
-  glpixels 20 200 40 40,data
-end.
+glpixels 20 200 40 40,data
+glemfclose''
 )
 
 NB. =========================================================
-gl2_run''
+demoemf_gs_paint=: 3 : 0
+glsel 'g0'
+glfile jpath '~temp/gl2.emf'
+emf_ppaint''
+wd 'clipcopyx enhmetafile ',jpath '~temp/gl2.emf'
+wd 'clippastex enhmetafile ',jpath '~temp/gl2x.emf'
+glsel 'gs'
+glfile jpath '~temp/gl2.emf'
+glemfplay 0 0
+)
+
+NB. =========================================================
+emf_run''

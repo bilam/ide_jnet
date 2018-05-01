@@ -1,3 +1,5 @@
+require 'jzgrid'
+
 coclass 'jtgrid'
 coinsert 'jzgrid jgl2'
 

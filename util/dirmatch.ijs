@@ -1,4 +1,4 @@
-require 'ide/jnet/util/jview'
+require 'jview'
 coclass 'jdirmatch'
 
 coinsert 'j'
@@ -78,6 +78,10 @@ DMSOURCEFM=: DMSOURCE
 DMSNAPS=: <;._2 termLF dmlower DMSNAPS
 DMSVNS=: <;._2 termLF dmlower DMSVNS
 DMFAVORITES=: _2 ,\ a: -.~ deb each <;._2 termLF DMFAVORITES
+if. 0=nc <'PROJECTFILE_jnproject_' do.
+  DMSNAPS=: cleanlist (<PROJECTFILE_jnproject_),DMSNAPS
+  DMSVNS=: cleanlist (<delBS PROJECTPATH_jnproject_),DMSVNS
+end.
 if. 0=nc <'PROJECTFILE_jproject_' do.
   DMSNAPS=: cleanlist (<PROJECTFILE_jproject_),DMSNAPS
   DMSVNS=: cleanlist (<delBS PROJECTPATH_jproject_),DMSVNS
@@ -221,7 +225,7 @@ end.
 i.0 0
 )
 pathcreate=: 3 : 0
-p=. jhostpath y
+p=. jpathsep y
 p=. p, PATHSEP_j_ -. {: p
 if. # 1!:0 }: p do. 1 return. end.
 p=. (p e. '/\') <;.2 p
@@ -485,7 +489,7 @@ end.
 )
 remfound=: 3 : 0
 fm=. <y
-dms=. jhostpath DMSOURCE, PATHSEP
+dms=. jpathsep DMSOURCE, PATHSEP
 
 msk=. fm ~: dms&, each {."1 DIFFCONT
 if. 0 e. msk do.
@@ -689,7 +693,7 @@ menupopz;
 menupop "&Help";
 menu help "&Help" "" "" "";
 menupopz;
-xywh 0 0 392 52;cc tabs tab rightmove;
+xywh 0 0 392 52;cc tabs static rightmove;
 xywh 0 58 392 1;cc s1 staticbox ss_etchedhorz rightmove;
 xywh 0 61 325 150;cc found editm ws_hscroll ws_vscroll rightmove bottommove;
 xywh 330 61 60 12;cc compare button leftmove rightmove;cn "Co&mpare";
@@ -935,8 +939,8 @@ else.
   to=. (fmtdir DMTARGET), (#fmtdir DMSOURCE) }. fm
 end.
 
-fm=. jhostpath fm
-to=. jhostpath to
+fm=. jpathsep fm
+to=. jpathsep to
 
 svn=. (DMTAB-:'svn') # ' Subversion'
 txt=. 'OK to copy from',svn,' source to target: ',LF,LF,fm
@@ -1161,7 +1165,7 @@ wd JDMSNP
 )
 jdmsnp_bpproject_button=: 3 : 0
 dir=. 0 pick DMSNAPS,<jpath '~home'
-j=. '"Project Files (*.ijp)|*.ijp"'
+j=. '"Project Files (*.jproj *.ijp)|*.jproj;*.ijp"'
 f=. mbopen '"Select Project" "',dir,'" "" ',j
 if. 0 = #f do. return. end.
 if. 0 = fexist f do. return. end.
@@ -1214,7 +1218,8 @@ if. isempty DMSNAPS do.
   PJSOURCES=: PJTARGETS=: PJSOURCE=: PJTARGET=: '' return.
 end.
 path=. 0 pick pathname 0 pick DMSNAPS
-PJSOURCES=: ss_list_jproject_ termBS path
+PJSOURCES=: ss_list_jnproject_ termBS path
+PJSOURCES=: PJSOURCES, ss_list_jproject_ termBS path
 PJTARGETS=: (<'Current'),PJSOURCES
 PJSOURCE=: >{. (PJSOURCES intersect <PJSOURCE), PJSOURCES
 PJTARGET=: >{. (PJTARGETS intersect <PJTARGET), PJTARGETS

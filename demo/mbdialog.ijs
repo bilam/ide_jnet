@@ -6,7 +6,7 @@ NB. mb open     - get name of file to open
 NB. mb open1    - get name of file to open
 NB. mb save     - get name of file to save
 NB. mb dir      - get directory name
-NB. mb print    - print with dialog
+NB. mb printer  - print with dialog
 
 coclass 'jndemo'
 
@@ -54,9 +54,9 @@ wd 'mb font Monospaced 10 bold underline'
 
 NB. =========================================================
 NB. print with dialog
-NB. wd 'mb print'
+NB. wd 'mb printer'
 demo6=: 3 : 0
-wd 'mb print'
+wd 'mb printer'
 )
 
 NB. =========================================================

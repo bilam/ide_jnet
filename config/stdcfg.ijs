@@ -22,20 +22,28 @@ SMSIZE=: 700 500
 SMSTYLE=: 3
 BOXFORM=: UNAME -: 'Darwin'
 BOXPOS=: 0 0
+BROWSER=: ''
 CONFIRMCLOSE=: 1
 DIRTREEX=: ''
 DISPLAYFORM=: 2
+EPSREADER=: ''
 FORMAT=: 1 0 2 1 0 0
 FORMSIZES=: 48 12 60 12 11
 MEMORYLIM=: _
 NEWUSER=: 1
+OPTOLDISIGRAPH=: 0
+OPTMB=: 0
+OPTPC6J=: 0
+OPTTWIP=: 0
 OUTPUT=: 0 256 0 222
+PDFREADER=: ''
 PRINTPREC=: 6
 READONLY=: 0
 SHOWSIP=: 1
 STARTUP=: '~config/startup.ijs'
 STATUSBAR=: 1
 SMCOLORID=: 'JStandard'
+XDIFF=: ''
 XNAMES=: 0
 
 FKEYS=: 0 : 0
@@ -48,5 +56,12 @@ FKEYS=: 0 : 0
 SMCOLOR=: JStandard
 
 SKEYS=: 0 : 0
+)
+
+USERFOLDERS=: 0 : 0
+'Projects';'~user/projects';0
+'User';'~user';0
+'System';'~system';0
+'Addons';'~addons';0
 )
 

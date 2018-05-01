@@ -7,7 +7,7 @@ GLSL=: 0
 STOP=: 1
 
 A=: 0 : 0
-pc a;
+pc8j a;
 minwh 300 300;cc g opengl version 3.0 flush rightmove bottommove;
 rem form end;
 )
@@ -146,7 +146,7 @@ glDisable GL_CULL_FACE
 
 glUseProgram 0
 
-NB. glclear ''
+glclear ''
 glrgb 255 255 255
 gltextcolor ''
 gltextxy 10 30

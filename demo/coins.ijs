@@ -2,7 +2,7 @@ NB. built from project: ~Source/examples/coins/coins
 NB. init
 
 require 'gl2'
-require 'ide/jnet/util/jview'
+require 'jview'
 
 coclass 'jcoins'
 
@@ -320,7 +320,7 @@ NB. =========================================================
 NB. paint does the draw and then glpaint
 paint=: 3 : 0
 draw''
-glpaint''
+glpaint`glpaintx@.IFJNET ''
 )
 
 NB. =========================================================
@@ -355,6 +355,7 @@ NB. =========================================================
 NB. drawnet v draw the network
 drawnet=: 3 : 0
 glclear''
+glfill^:IFJNET 255 255 255
 mxy=. MOVECLR </. MOVEPOS
 
 NB. lines
@@ -416,6 +417,8 @@ NB. mouse handling
 NB. =========================================================
 mmove=: 3 : 0
 if. DONE do. return. end.
+NB. in case mmove event happened before paint event
+if. IFJNET *. 0~:4!:0<'RAD' do. return. end.
 ndx=. gethit''
 if. MBRDOWN < ndx < 0 do.
   clearmark''
@@ -510,6 +513,7 @@ NB. =========================================================
 coin_run=: 3 : 0
 DONE=: 0
 wd COIN
+glnodblbuf^:IFJNET 0
 setparentname''
 paint''
 wd 'pshow;'
@@ -558,7 +562,7 @@ end.
 
 NB. =========================================================
 coin_viewcode_button=: 3 : 0
-fview jpath '~system/examples/demo/coins.ijs'
+fview jpath '~addons/ide/jnet/demo/coins.ijs'
 )
 
 NB. =========================================================

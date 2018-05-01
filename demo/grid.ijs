@@ -68,7 +68,7 @@ NB. util
 NB. =========================================================
 assign=: 4 : '".x,''=:y'''
 
-fexist=: 1:@(1!:4)@boxopen ::0:
+fexist=: (1:@(1!:4) :: 0:) @ (fboxname &>) @ boxopen
 
 NB. =========================================================
 gridfix=: 3 : 0
@@ -463,7 +463,7 @@ gridedit_sctrlshift_fkey=: 3 : 0
 grf=. gridunfix gdef
 grf=. (+./\. grf ~: LF) # grf
 grf=. grf,LF
-f=. jpath '~Public/grid/dev/demo\exam.ijs'
+f=. jpath '~Addons/grid/dev/demo/exam.ijs'
 dat=. freads f
 sel=. GNAME,'=: 0 : 0',LF
 ndx=. (#sel) + 1 i.~ sel E. dat
@@ -972,7 +972,7 @@ gridnotes_sctrlshift_fkey=: 3 : 0
 grf=. toJ gdef
 grf=. (+./\. grf ~: LF) # grf
 grf=. grf,LF
-f=. jpath '~Public/grid/dev/demo\exam.ijs'
+f=. jpath '~Addons/grid/dev/demo/exam.ijs'
 dat=. freads f
 sel=. NNAME,'=: 0 : 0',LF
 ndx=. (#sel) + 1 i.~ sel E. dat

@@ -1,5 +1,5 @@
 
-require 'ide/jnet/util/jview'
+require 'jview'
 
 load '~addons/ide/jnet/demo/citycalc.ijs'
 load '~addons/ide/jnet/demo/citywp.ijs'

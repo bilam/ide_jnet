@@ -8,6 +8,27 @@ font=. ' ',y
 b=. (font=' ') > ~:/\font='"'
 a: -.~ b <;._1 font
 )
+cutfolders=: 3 : 0
+if. 0=#y do. i.0 3 return. end.
+if. '''' = {. y do.
+  y=. 3{."1 ".;._2 y
+  (,each 2 {."1 y) 0 1 }"1 y return.
+end.
+j=. <;._2 y
+if. (_2 {. 0 pick j) e. ' ',.'01' do.
+  sub=. <&> 0 ". _2 {.&> j
+  j=. _2 }.each j
+else.
+  sub=. <0
+end.
+ndx=. j i.&> ' '
+nms=. ndx {.each j
+pth=. deb each (ndx+1) }.each j
+if. 0~:4!:0<'IFWIN32' do.
+  sub=. (#nms)#(<0)
+end.
+nms,.pth,.sub
+)
 wdc=: 3 : 0
 try. wd y
 catch.
@@ -24,7 +45,15 @@ end.
 cfread=: 3 : 0
 0!:0 <jpath '~addons/ide/jnet/config/stdcfg.ijs'
 0!:0 :: ] <jpath '~config/config.ijs'
+ADDNAMES=: ''
+0!:0 :: ] <jpath '~addons/config/config.ijs'
+if. #ADDNAMES do.
+  nms=. <;._1 &> ' ' ,each <;._2 jpathsep ADDNAMES
+  nms=. nms ,each "1 '';'~addons',PATHSEP_j_
+  Public_j_=: /:~ ~. Public_j_,nms
+end.
 OUTPUT=: 0, }. OUTPUT
+USERFOLDERS=: cutfolders USERFOLDERS
 FORMAT=: FORMAT,(#FORMAT) }. 1 0 2 1 0 0
 )
 configure=: 3 : 0
@@ -42,7 +71,11 @@ configrun=: 3 : 0
 9!:17 BOXPOS
 9!:21 (2&^ ^: (<&_)) MEMORYLIM
 9!:37 OUTPUT
-9!:49 XNAMES
+9!:49 ::0: XNAMES
+11!:0 ::0: 'setj mb ', ":OPTMB
+11!:0 ::0: 'setj oldisigraph ', ":OPTOLDISIGRAPH
+11!:0 ::0: 'setj pc6j ', ":OPTPC6J
+11!:0 ::0: 'setj twip ', ":OPTTWIP
 if. IFUNIX do.
   FIXFONT_z_=: FIXFONTJ
   PROFONT_z_=: PROFONTJ
@@ -54,15 +87,22 @@ FIXFONTWH_z_=: (fixfontsize ::])^:(-.IFCONSOLE) 8 16
 FIXFONTDEF_jijs_=: FIXFONT_z_
 CONFIRMCLOSE_j_=: CONFIRMCLOSE
 DIRTREEX_j_=: DIRTREEX
+EPSREADER_j_=: EPSREADER
 FORMAT_j_=: FORMAT
 FORMSIZES_j_=: FORMSIZES
 P2UPFONT_j_=: P2UPFONT
+PDFREADER_j_=: PDFREADER
 PRINTERFONT_j_=: PRINTERFONT
 PRINTOPT_j_=: PRINTOPT
 READONLY_j_=: READONLY
 SHOWSIP_j_=: SHOWSIP
 SMPRINT_j_=: SMPRINT
 STARTUP_j_=: STARTUP
+if. 0~:4!:0<'IFWIN32' do.
+else.
+  USERFOLDERS_j_=: USERFOLDERS
+end.
+XDIFF_j_=: XDIFF
 
 if. -.IFCONSOLE do.
   clr=. getcolors SMCOLOR

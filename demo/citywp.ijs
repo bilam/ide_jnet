@@ -38,7 +38,7 @@ wd IFWINCE pick CITIES;CITIESCE
 wd 'set clist *',;BNAMES,&.>LF
 wd 'setselect clist ',":(#BNAMES)|.BNAMES i. <'Antwerp'
 wd 'set Kilometers 1'
-wd 'set Alphabetic 1'	
+wd 'set Alphabetic 1'
 wd 'pshow'
 )
 

@@ -5,7 +5,7 @@ coclass 'jndemo'
 NB. =========================================================
 imdemo_run=: 3 : 0
 if. -. checkrequire 'bmp';'graphics/bmp' do. return. end.
-wd 'pc imdemo closeok'
+wd 'pc8j imdemo closeok'
 wd 'xywh 0 0 150 150;cc pic image'
 wd 'xywh 150 0 150 150;cc jpg image stretch'
 wd 'xywh 0 150 150 150;cc png image zoom'

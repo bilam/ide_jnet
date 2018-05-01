@@ -264,7 +264,7 @@ else.
   prints dat
 end.
 )
-fileprintsetup=: empty @ wd bind (IFJNET{::'mbprinter pd_printsetup';'mb print')
+fileprintsetup=: empty @ wd bind (IFJNET{::'mbprinter pd_printsetup';'mbprinter')
 formedit=: 3 : 0
 require 'ide/jnet/util/formedit'
 y conew 'jformedit'
@@ -289,7 +289,7 @@ lab_jlab_ y
 prints=: 3 : 0
 '' prints y
 :
-require 'ide/jnet/util/print'
+require 'print'
 f=. SMPRINT_j_
 try.
   x f~ y
@@ -300,7 +300,7 @@ end.
 printfiles=: 3 : 0
 '' printfiles y
 :
-require 'ide/jnet/util/print'
+require 'print'
 f=. SMPRINT_j_
 f=. (5{.f),'file',5}.f
 try.
@@ -315,6 +315,10 @@ runpacman_jpacman_ y
 )
 projectmanager=: 3 : 0
 require 'ide/jnet/util/project'
+projectmanager_jnproject_ y
+)
+projectmanager6=: 3 : 0
+require 'ide/jnet/util/project6'
 projectmanager_jproject_ y
 )
 INPUTLOGFILE=: jpath '~config/input.log'
@@ -354,6 +358,8 @@ end.
 INPUTLOG=: '';0
 WINPOS=: i.0 2
 filex=: ] , ([: -. '.'"_ e. ]) # [
+
+TARGET=: i.0 2
 edit=: 3 : 0
 'n s'=. y
 file=. {.,getscripts_j_ s
@@ -393,7 +399,7 @@ smoutput '   ',t1
 empty''
 )
 loadp=: ''&$: : (4 : 0)
-require 'ide/jnet/util/project'
+require 'ide/jnet/util/project6'
 x loadproject_jproject_ y
 )
 open=: 3 : 0

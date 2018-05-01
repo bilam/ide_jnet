@@ -1,6 +1,6 @@
 NB. init for pousse
 
-require 'ide/jnet/util/jview'
+require 'jview'
 require 'gl2'
 
 coclass 'pousse'
@@ -258,7 +258,7 @@ ev2a=: flip@[ ([ -@:(>./"1)@:ev moves)"2 ]
 
 ev2=: 4 : 0                    NB. 2-ply search using ev on each ply
 p=. x ev y
-i=. I.  (_1e6<p)*.p<1e6   NB. look on only if non winner & non loser
+i=. I. (_1e6<p)*.p<1e6   NB. look on only if non winner & non loser
 q=. (x ev2a i{y) i}p
 (*./_1e6>q){q,:p               NB. if q is all bleak, just use p
 )
@@ -416,8 +416,8 @@ wd 'setfocus board'
 
 NB. =========================================================
 button_enable=: 3 : 0
-1 button_enable I.  y
-0 button_enable I.  -.y
+1 button_enable I. y
+0 button_enable I. -.y
 :
 if. #y do.
   bn=. y{,BUTTONS
