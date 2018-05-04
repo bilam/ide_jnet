@@ -132,7 +132,21 @@ msg=. 'The JNet application needs updating.',LF2
 msg=. msg,'Please download and install the latest jnet addon.'
 sminfo 'JNet';msg
 )
-
+showevents=: 3 : 0
+select. {. y,1
+case. 0 do.
+  4!:55 <'wdhandler_debug_z_'
+case. 1 do.
+  wdhandler_debug_z_=: 3 : 'smoutput sysevent,''_'',(>coname''''),''_'''
+case. 2 do.
+  wdhandler_debug_z_=: 3 : 'smoutput wdq'
+case. 3 do.
+  wdhandler_debug_z_=: 3 : 'if. -. ''_mmove''-:_6{.sysevent do. smoutput sysevent end.'
+case. 4 do.
+  wdhandler_debug_z_=: 3 : 'if. -. ''_mmove''-:_6{.sysevent do. smoutput wdq end.'
+end.
+EMPTY
+)
 18!:4 <'base'
 
 3 : 0''

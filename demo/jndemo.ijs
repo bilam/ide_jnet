@@ -3,7 +3,6 @@
 18!:55 <'jndemo'
 coclass 'jndemo'
 
-showevents_jnet_=: 0:
 sububar=: I. @(e.&'_')@]}
 maketitle=: ' '&sububar each @ cutopen ;._2
 fexist=: (1:@(1!:4) :: 0:) @ (fboxname &>) @ boxopen

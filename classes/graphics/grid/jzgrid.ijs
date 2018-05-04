@@ -744,7 +744,7 @@ if. GRIDFORMEVENTS do.
   end.
 else.
   locV=: coname''
-  if. ('jwin32';'jjava') e.~ < (11!:0) :: 0: 'qwd' do.
+  if. IFJNET < ('jwin32';'jjava') e.~ < (11!:0) :: 0: 'qwd' do.
     glsel ":GRIDHWNDC
     wd 'setlocale ',GRIDID,' ',>locV
     f=. (<pid,'_',GRIDID,'_') ,each EVENTS
@@ -752,7 +752,7 @@ else.
   else.
     ploc=. wd'getp locale'
     f=. (<pid,'_',GRIDID,'_') ,each EVENTS ,each (<'_',ploc,'_')
-    t=. ;f ,each (<'=: 3 : ''') ,each EVENTS ,each (<'_',(>locV),'_ '''''''' [ sysdata_',(>locV),'_=: sysdata_',ploc,'_ ''') ,each LF
+    t=. ;f ,each (<'=: 3 : ''') ,each EVENTS ,each (<'_',(>locV),'_ '''''''' [ sysdata_',(>locV),'_=: sysdata_',ploc,'_ [ sysmodifiers_',(>locV),'_=: sysmodifiers_',ploc,'_ ''') ,each LF
   end.
   0!:100 t
 end.

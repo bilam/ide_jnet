@@ -40,7 +40,7 @@ glemfclose=: 11!:2085
 glemfplay=: 11!:2086
 glfile=: 11!:2066
 glfont=: 11!:2012
-glfontextent=: 11!:2012
+glfontextent=: 11!:2094
 gllines=: 11!:2015
 glnodblbuf=: 11!:2070
 glpaint=: 11!:2020
@@ -72,10 +72,13 @@ glwindoworg=: 11!:2045
 NB. added in jnet
 
 glfill=: 11!:2093
+glprintdevmode=: 11!:2095
+glprintqdevmode=: 11!:2096
 glfont2=: 11!:2312
 glfontangle=: 11!:2342
 glpaintx=: 11!:2021
 glqdpi=: 11!:2347
+glqtype=: 11!:2350
 glrgba=: 11!:2343
 glsel2=: 11!:2344
 glwaitgl=: 11!:2345
