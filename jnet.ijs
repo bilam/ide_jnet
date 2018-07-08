@@ -121,7 +121,7 @@ destroy''
 try. RETURN~ res catch. end.
 )
 coclass 'jnet'
-JNETREQ=: '1.0.0.0'
+JNETREQ=: '1.0.1.0'
 checkjnetversion=: 3 : 0
 f=. 1000 #. 3 {. 0 ". ' ' I.@('.'=])} ]
 ver=. wd 'version'

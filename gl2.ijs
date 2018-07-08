@@ -73,7 +73,7 @@ NB. added in jnet
 
 glfill=: 11!:2093
 glprintdevmode=: 11!:2095
-glprintqdevmode=: 11!:2096
+glqprintdevmode=: 11!:2096
 glfont2=: 11!:2312
 glfontangle=: 11!:2342
 glpaintx=: 11!:2021
