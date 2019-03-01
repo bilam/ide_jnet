@@ -1792,7 +1792,7 @@ elseif. IFJAVA do.
   JIJS=: }: ; (-.m) # t
 end.
 ndx=. I. 'ZZ' E. JIJS
-JIJS=: 'NB' (ndx +/ 0 1) } JIJS
+JIJS=: 'NB' (<"0 ndx +/ 0 1) } JIJS
 )
 
 recent_read''

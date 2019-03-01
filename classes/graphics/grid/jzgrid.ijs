@@ -105,7 +105,7 @@ y=. a. i. y
 y=. y #~ 1 j. 127 < y
 c=. y {~ ndx=. I. 127 < y
 n=. 192 128 +"1 [ 0 64 #: c
-a. {~ n (ndx +/ 0 1) } y
+a. {~ n (<"0 ndx +/ 0 1) } y
 )
 capture=: 3 : 0
 glcapture Capture=: y
