@@ -158,7 +158,7 @@ configrun=: 3 : 0
 9!:17 BOXPOS
 9!:21 (2&^ ^: (<&_)) MEMORYLIM
 9!:37 OUTPUT
-9!:49 ::0: XNAMES
+try. 9!:49 XNAMES catch. end.
 11!:0 ::0: 'setj mb ', ":OPTMB
 11!:0 ::0: 'setj oldisigraph ', ":OPTOLDISIGRAPH
 11!:0 ::0: 'setj pc6j ', ":OPTPC6J
