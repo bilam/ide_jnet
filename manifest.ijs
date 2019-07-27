@@ -18,7 +18,7 @@ Linux:
 Read data/migration.txt for differences with J6 wd commands.
 )
 
-VERSION=: '1.0.17'
+VERSION=: '1.0.18'
 
 PLATFORMS=: 'windows linux'
 
