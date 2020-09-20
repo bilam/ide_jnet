@@ -96,10 +96,10 @@ dlb=: }.~ =&' ' i. 0:
 isempty=: 0: e. $
 index=: #@[ (| - =) i.
 intersect=: e. # [
-last=: 1 : 'x " 1'
+last=: 1 : 'u " 1'
 pathname=: 3 : '(b#y);(-.b=.+./\.y=PATHSEP)#y'
 quote=: ''''&,@(,&'''')@(#~ >:@(=&''''))
-subs=. 2 : 'x I. @(e.&y)@]} ]'
+subs=. 2 : 'm I. @(e.&n)@]} ]'
 toblank=: ' ' subs '_'
 tohyphen=: '_' subs ' '
 

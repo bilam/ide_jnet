@@ -29,7 +29,7 @@ a=. ''''
 quote=: (a&,@(,&a))@ (#~ >:@(=&a))
 
 sort=: /:~ :/:
-subs=: 2 : 'x I. @(e.&y)@]} ]'
+subs=: 2 : 'm I. @(e.&n)@]} ]'
 vectoblank=: deb @ (' ' subs LF)
 
 tolist=: }. @ ; @: ((10{a.)&,@,@":each)
