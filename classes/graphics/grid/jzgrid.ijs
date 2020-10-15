@@ -1154,7 +1154,7 @@ Gxywh=: Gx,Gy,Gw,Gh
 ch=. 0 >. Gh - Hh
 cw=. 0 >. Gw - Hw
 
-Dw=: Hc }. ColWidths
+Dw=: Hc }. ColWidths=: >. ColWidths
 Dh=: Hr }. RowHeights
 
 MaxDataRows=: >. ch % <./ Dh
