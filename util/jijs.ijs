@@ -119,7 +119,7 @@ end.
 )
 clearijx=: 3 : 0
 fms=. wdforms''
-pid=. >1{{. fms #~ (<'jijx') = 3 {"1 fms
+pid=. >1{ {. fms #~ (<'jijx') = 3 {"1 fms
 wd 'psel ',pid, ';set',(IFJNET#'text'),' e'
 )
 getactsize=: 3 : 0
