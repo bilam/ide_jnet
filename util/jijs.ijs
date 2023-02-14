@@ -445,8 +445,12 @@ wd :: ] 'psel ',SMHWNDP,';pclose'
 codestroy''
 )
 aboutj=: 3 : 0
-r=. 'J',}.(i.&'/'{.])9!:14''
-r=. r,' - Copyright 1994-2016 Jsoftware Inc., www.jsoftware.com.'
+if. 3=4!:0<'revinfo_j_' do.
+  r=. getJverold ''
+else.
+  r=. 'j',}.(i.&'/'{.])9!:14''
+end.
+r=. r,' - Copyright 1994-2023 Jsoftware Inc., www.jsoftware.com.'
 r=. r,LF,LF,JVERSION
 r=. r,LF,LF,'This computer program is protected by copyright law and international treaties.'
 )

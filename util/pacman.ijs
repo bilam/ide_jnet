@@ -38,7 +38,11 @@ ADDCFGIJS=: ADDCFG,'config.ijs'
 if. 0: ~: 4!:0 @ < 'JLIB' do.
   JRELEASE=: ({.~i.&'/') 9!:14''
 else.
-  JRELEASE=: 'j','.'-.~({.~i:&'.') JLIB
+  if. 3=4!:0<'revinfo_j_' do.
+    JRELEASE=: getJverold ''
+  else.
+    JRELEASE=: 'j','.'-.~({.~i:&'.') JLIB
+  end.
 end.
 LIBTREE=: readtree''
 WWW=: 'http://www.jsoftware.com/jal/',JRELEASE,'/'

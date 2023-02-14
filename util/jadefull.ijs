@@ -197,7 +197,12 @@ f=. jpath '~addons/docs/help/',y
 if. fexist ({.~ i:&'#') f do.
   browse 'file://',f
 else.
-  f=. 'http://www.jsoftware.com/docs/help',}.(i.&'/'{.]) 9!:14''
+  if. 3=4!:0<'revinfo_j_' do.
+    if. 807< ver=. <.@(%&1e4)JVERSION_NUMBER do. ver=. 807 end.
+    f=. 'http://www.jsoftware.com/docs/help',":ver
+  else.
+    f=. 'http://www.jsoftware.com/docs/help',}.(i.&'/'{.]) 9!:14''
+  end.
   browse f,'/',y
 end.
 )

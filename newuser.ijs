@@ -102,8 +102,12 @@ wd BUF
 wd 'pshow'
 )
 newuserdefs=: 3 : 0
-ver=. (i.&'/' {. ])9!:14''
-JVER=: 'J',(({.ver) e. 'jJ') }. ver
+if. 3=4!:0<'revinfo_j_' do.
+  JVER=: getJverold ''
+else.
+  ver=. (i.&'/' {. ])9!:14''
+  JVER=: 'j',(({.ver) e. 'jJ') }. ver
+end.
 if. IFUNIX do.
   FONT=: IFJAVA{::'"DejaVu Serif" 10';'SansSerif 10'
   FONT2=: IFJAVA{::'"DejaVu Serif" 14 bold';'SansSerif 14 bold'
