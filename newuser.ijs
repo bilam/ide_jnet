@@ -103,7 +103,7 @@ wd 'pshow'
 )
 newuserdefs=: 3 : 0
 if. 3=4!:0<'revinfo_j_' do.
-  JVER=: getJverold ''
+  JVER=: 'j', ": 100 #. 2 {. 100 #.inv >{.revinfo_j_''
 else.
   ver=. (i.&'/' {. ])9!:14''
   JVER=: 'j',(({.ver) e. 'jJ') }. ver

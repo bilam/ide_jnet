@@ -39,7 +39,7 @@ if. 0: ~: 4!:0 @ < 'JLIB' do.
   JRELEASE=: ({.~i.&'/') 9!:14''
 else.
   if. 3=4!:0<'revinfo_j_' do.
-    JRELEASE=: getJverold ''
+    JRELEASE=: 'j', ": 100 #. 2 {. 100 #.inv >{.revinfo_j_''
   else.
     JRELEASE=: 'j','.'-.~({.~i:&'.') JLIB
   end.
