@@ -446,7 +446,7 @@ codestroy''
 )
 aboutj=: 3 : 0
 if. 3=4!:0<'revinfo_j_' do.
-  r=. getJverold_j_ ''
+  r=. 'j', ": 100 #. 2 {. 100 #.inv >{.revinfo_j_''
 else.
   r=. 'j',}.(i.&'/'{.])9!:14''
 end.
