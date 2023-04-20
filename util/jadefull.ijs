@@ -198,11 +198,11 @@ if. fexist ({.~ i:&'#') f do.
   browse 'file://',f
 else.
   if. 3=4!:0<'revinfo_j_' do.
-    if. 807< ver=. <.@(%&1e4)JVERSION_NUMBER do. ver=. 807 end.
-    f=. 'http://www.jsoftware.com/docs/help',":ver
+    ver=. 807 <. 100 #. 2 {. 100 #.inv >{.revinfo_j_''
   else.
-    f=. 'http://www.jsoftware.com/docs/help',}.(i.&'/'{.]) 9!:14''
+    ver=. ". }.(i.&'/'{.]) 9!:14''
   end.
+  f=. 'http://www.jsoftware.com/docs/help',":ver
   browse f,'/',y
 end.
 )
