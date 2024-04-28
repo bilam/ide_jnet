@@ -3,7 +3,7 @@ NB.
 NB. this script is loaded when J is run from the console,
 NB. in addition to sysenv, stdlib, colib and break
 
-18!:4 <'z'
+cocurrent <'z'
 
 getenv=: 2!:5
 echo=: 0 0&$ @ (1!:2&2)

@@ -1,6 +1,6 @@
 NB. JNet
 
-18!:4 <'z'
+cocurrent <'z'
 
 PATHSEP_j_=: '/'
 
@@ -46,7 +46,7 @@ jtgrid       ~addons/ide/jnet/classes/graphics/grid/jtgrid
 jvgrid       ~addons/ide/jnet/classes/graphics/grid/jvgrid
 jzgrid       ~addons/ide/jnet/classes/graphics/grid/jzgrid
 )
-18!:4 <'jnet'
+cocurrent <'jnet'
 addons_msg=: 0 : 0
 The XX are not yet installed.
 
@@ -147,7 +147,7 @@ case. 4 do.
 end.
 EMPTY
 )
-18!:4 <'base'
+cocurrent <'base'
 
 3 : 0''
 if. 0=4!:0<'DISPLAYLOAD_j_' do.

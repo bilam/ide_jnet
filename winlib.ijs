@@ -24,7 +24,7 @@ NB. wdstatus      put status message on screen
 NB. mbopen        cover verb for jpathsep wd mbopen
 NB. mbsave        cover verb for jpathsep wd mbsave
 
-18!:4 (0-.@-:(11!:0) :: 0: 'qwd'){'jnet';'z'
+cocurrent (0-.@-:(11!:0) :: 0: 'qwd'){'jnet';'z'
 
 NB. =========================================================
 NB.*wd v main window driver, name for 11!:0

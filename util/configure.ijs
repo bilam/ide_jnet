@@ -85,7 +85,7 @@ m=. ' ' e.&> n
 p=. m { '';'"'
 }. ' ' ,each p ,each n ,each p
 )
-18!:4 <'jcfg'
+cocurrent <'jcfg'
 BOXES=: ((16+i.11) { a.),'+++++++++|-',:218 194 191 195 197 180 192 193 217 179 196{a.
 MAXSMSTYLE=: IFJAVA { 3 2
 SMCOLORORG=: ''

@@ -1,5 +1,5 @@
 
-18!:4 <'base'
+cocurrent <'base'
 18!:55 <'jndemo'
 coclass 'jndemo'
 
