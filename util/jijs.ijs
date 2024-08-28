@@ -90,7 +90,6 @@ loc=. 2{"1 fms
 for_lc. loc do.
   if. 0 = exitijs__lc :: 1: '' do. return. end.
 end.
-0!:101 :: ] SYS_TERMINATE
 2!:55''
 )
 closeijs=: 3 : 0
