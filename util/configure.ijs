@@ -1217,7 +1217,7 @@ else.
     nms=. toblank each {."1 dat
     USRKEYS=: nms ,. {:"1 dat
   end.
-  18!:55 <'jcfg0'
+  271828&(18!:55) ::(18!:55) ::0: <'jcfg0'
 end.
 ckincx''
 )
@@ -1235,7 +1235,7 @@ else.
   p_jcfg0_=: [: (, ,&< ".) &> (4!:1)
   dat=. p_jcfg0_ 0
   dat=. dat #~ -. ({."1 dat) e. ;: 'y y.'
-  18!:55 <'jcfg0'
+  271828&(18!:55) ::(18!:55) ::0: <'jcfg0'
   if. 0 e. $dat do.
     dat=. DEFSCHEMES ,. ". each DEFSCHEMES
   end.

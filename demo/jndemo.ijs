@@ -1,6 +1,6 @@
 
 cocurrent <'base'
-18!:55 <'jndemo'
+271828&(18!:55) ::(18!:55) ::0: <'jndemo'
 coclass 'jndemo'
 
 sububar=: I. @(e.&'_')@]}
